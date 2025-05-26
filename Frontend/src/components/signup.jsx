@@ -54,7 +54,7 @@ export default function SignUp() {
 
     try {
       const response = await fetch(
-        "https://yajveer-backend.vercel.app/api/v1/users/userregister",
+        "https://yajveer-testing.vercel.app/api/v1/users/userregister",
         {
           method: "POST",
           headers: {
