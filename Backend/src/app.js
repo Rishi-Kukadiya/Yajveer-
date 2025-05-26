@@ -5,8 +5,8 @@ import ServerlessHttp from "serverless-http";
 
 const app = express();
 const allowedOrigins = [
-  "https://yajveer-cqp2.vercel.app",
   "http://localhost:5173",
+  "https://yajveer.vercel.app"  
 ];
 // CORS middleware
 app.use(
@@ -49,6 +49,10 @@ app.use((err, req, res, next) => {
     errors: err.errors || [],
     stack: process.env.NODE_ENV === "development" ? err.stack : undefined,
   });
+});
+
+app.get("/api/v1", (req, res) => {
+    res.send("Welcome to CKS_dev");
 });
 
 export { app };

@@ -1,8 +1,9 @@
 import dotenv from "dotenv";
+dotenv.config({ path: ".env" });
 import connectDB from "./db/index.js";
 import { app } from "./app.js";
 
-dotenv.config({ path: ".env" });
+
 
 connectDB()
   .then(() => {
@@ -16,6 +17,5 @@ connectDB()
     console.error("MongoDB connection failed:", error);
   });
 
-  app.get("/api/v1", (req, res) => {
-    res.send("Welcome to CKS_dev");
-  });
+
+export default app;
