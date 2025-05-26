@@ -12,6 +12,8 @@ import AboutUs from './components/AboutUs';
 import ScrollToTop from './components/ScrollToTop';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import Returnpolicy from './components/Footer/returnpolicy';
+import TermsAndConditions from './components/TermsConditions';
+import ShippingPolicy from './components/ShippingPolices';
 
 const App = () => {
   return (
@@ -28,6 +30,8 @@ const App = () => {
             <Route path="/contact" element={<ContactUs></ContactUs>}></Route>
             <Route path="/privacy" element={<PrivacyPolicy></PrivacyPolicy>}></Route>
             <Route path="/returnpolicy" element={<Returnpolicy></Returnpolicy>}></Route>
+            <Route path="/terms" element={<TermsAndConditions></TermsAndConditions>}></Route>
+            <Route path="/shipping" element={<ShippingPolicy></ShippingPolicy>}></Route>
         </Routes>
         </>
     )
