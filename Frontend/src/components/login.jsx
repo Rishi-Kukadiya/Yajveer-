@@ -50,7 +50,7 @@ export default function Login() {
 
     try {
       const response = await fetch(
-        "https://yajveer-testing.vercel.app/api/v1/users/userlogin",
+        "https://localhost:2590/api/v1/users/userlogin",
         {
           method: "POST",
           headers: {

@@ -1,47 +1,125 @@
-// import { useState } from "react";
 import "../CSS/Login.css";
 import Ayur from "../assets/logp.jpg";
 import { Link } from "react-router";
-export default function Login(){
-    return(
-        <>
-            <div className="welcome-header">
-                <h1>Welcome to Yajveer!</h1>
-                <p>Please Login to your account</p>
+import ErrorPopup from "./ErrorPopup";
+import { Navigate } from "react-router";
+import { useDispatch } from "react-redux";
+import { loginSuccess } from "../Redux/authSlice";
+import { useState } from "react";
+
+export default function Login() {
+  const dispatch = useDispatch();
+  const [redirect, setRedirect] = useState(false);
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const [popupMessage, setPopupMessage] = useState("");
+
+  const validate = () => {
+    const emailRegex =
+      /^[a-zA-Z0-9._%+-]+@(gmail\.com|yahoo\.com|outlook\.com|icloud\.com|protonmail\.com|hotmail\.com)$/i;
+
+    if (!formData.email || !emailRegex.test(formData.email)) {
+      setPopupMessage("Please enter a valid email address.");
+      return false;
+    }
+
+    if (!formData.password || formData.password.length < 6) {
+      setPopupMessage("Password must be at least 6 characters.");
+      return false;
+    }
+    return true;
+  };
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!validate()) return;
+
+    try {
+      const response = await fetch(
+        "https://yajveer-testing.vercel.app/api/v1/users/adminlogin",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify(formData),
+        }
+      );
+
+      const result = await response.json();
+      if (result.success) {
+        dispatch(loginSuccess(result));
+        console.log(result);
+        setPopupMessage(result.message);
+        setTimeout(() => setRedirect(true), 2000);
+      } else {
+        setPopupMessage(result.message);
+      }
+    } catch (error) {
+      console.error("Error posting data:", error);
+      setPopupMessage("Network error or server not responding.");
+    }
+  };
+
+  if (redirect) {
+    return <Navigate to="/home" replace />;
+  }
+  return (
+    <>
+      <div className="welcome-header">
+        <h1>Welcome to Yajveer!</h1>
+        <p>Please Login to your account</p>
+      </div>
+      <div className="log">
+        <div className="imgsec">
+          <img src={Ayur} alt="Yajveer" />
+        </div>
+        <div className="logform">
+          <div className="mainlog">
+            <h2 className="form-title">Admin Login</h2>
+            <div className="field">
+              <form action="" className="logf" onSubmit={handleSubmit}>
+                <div className="usn">
+                  <label htmlFor="userName">Email : </label>
+                  <input
+                    type="text"
+                    id="email"
+                    name="email"
+                    placeholder="Enter Your email"
+                    value={formData.email}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="usp">
+                  <label htmlFor="password">Password : </label>
+                  <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Enter Your Password"
+                    value={formData.password}
+                    onChange={handleChange}
+                  ></input>
+                </div>
+                <Link to="/forgotpassword">
+                  <p className="fogpass">Forgot Your Password</p>
+                </Link>
+                <button>Login</button>
+              </form>
             </div>
-            <div className="log">
-                    <div className="imgsec">
-                        <img src={Ayur} alt="Yajveer" />
-                    </div>
-                    <div className="logform">
-                        <div className="mainlog">
-                            <h2 className="form-title">Admin Login</h2>
-                            <div className="field">
-                                <form action="" className="logf">
-                                    <div className="usn">
-                                            <label htmlFor="userName">User Name : </label>
-                                     <input type="text"id="userName" name="userName" placeholder="Enter Your UserName"/>
-                                    </div>
-                                    <div className="usp">
-                                             <label htmlFor="password">Password : </label>
-                                     <input type="password" id="password" name="password" placeholder="Enter Your Password"></input>
-                                    </div>
-                                    <Link to='/forgotpassword'>
-                                    <p className="fogpass">Forgot Your Password</p>
-                                    </Link>
-                                    <button>Login</button>
-                                </form>
-                                
-                                <div className="newus">
-                                    <p className="ne">New User ? </p>
-                                    <Link to='/register'>
-                                    <p className="ne1">SignUp</p>
-                                    </Link>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-            </div>
-        </>
-    )
-};
+          </div>
+        </div>
+      </div>
+      <ErrorPopup message={popupMessage} onClose={() => setPopupMessage("")} />
+    </>
+  );
+}

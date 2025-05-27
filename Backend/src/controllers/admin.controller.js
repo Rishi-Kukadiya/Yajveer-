@@ -92,7 +92,8 @@ const loginAdmin = asyncHandler(async (req, res) => {
 
   const options = {
     httpOnly: true,
-    secire: true,
+    secure: true,
+    sameSite : "None",
   };
 
   return res
@@ -127,12 +128,12 @@ const logoutAdmin = asyncHandler(async (req, res) => {
     { new: true }
   );
 
-  const isProduction = process.env.NODE_ENV === "production";
+  // const isProduction = process.env.NODE_ENV === "production";
 
   const options = {
     httpOnly: true,
-    secure: isProduction,
-    sameSite: isProduction ? "strict" : "lax",
+    secure: true,
+    sameSite: "None",
   };
 
   return res
