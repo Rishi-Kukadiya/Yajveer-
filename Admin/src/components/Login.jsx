@@ -77,7 +77,7 @@ export default function Login() {
   };
 
   if (redirect) {
-    return <Navigate to="/home" replace />;
+    return <Navigate to="/admin" replace />;
   }
   return (
     <>
