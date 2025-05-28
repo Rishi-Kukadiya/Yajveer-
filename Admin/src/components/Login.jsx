@@ -66,8 +66,13 @@ export default function Login() {
         setPopupMessage(result.message);
       }
     } catch (error) {
-      console.error("Error posting data:", error);
-      setPopupMessage("Network error or server not responding.");
+      // console.error("Error posting data:", error);
+      // setPopupMessage("Network error or server not responding.");
+      if (error.response?.data?.message) {
+        setPopupMessage(error.response.data.message);
+      } else {
+        setPopupMessage("Something went wrong. Please try again.");
+      }
     }
   };
 
