@@ -37,7 +37,7 @@ export default function Sidebar1({ onClose }) {
         }
       );
 
-      const result =  response.data;
+      const result = response.data;
       if (result.success) {
         dispatch(logout());
         setPopupMessage("Logout successful");
@@ -45,8 +45,13 @@ export default function Sidebar1({ onClose }) {
         setPopupMessage("Logout failed: " + result.message);
       }
     } catch (error) {
-      console.error("Logout error:", error);
-      setPopupMessage("Logout error");
+      // console.error("Logout error:", error);
+      // setPopupMessage("Logout error");
+      if (error.response?.data?.message) {
+        setPopupMessage(error.response.data.message);
+      } else {
+        setPopupMessage("Something went wrong. Please try again.");
+      }
     }
   };
 

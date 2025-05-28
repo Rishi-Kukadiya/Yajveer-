@@ -6,6 +6,7 @@ import { Navigate } from "react-router";
 import { useDispatch } from "react-redux";
 import { loginSuccess } from "../Redux/authSlice";
 import { useState } from "react";
+import axios from "axios";
 
 export default function Login() {
   const dispatch = useDispatch();
@@ -43,19 +44,19 @@ export default function Login() {
     if (!validate()) return;
 
     try {
-      const response = await fetch(
+      const response = await axios.post(
         "https://yajveer-testing.vercel.app/api/v1/users/adminlogin",
+        formData,
         {
-          method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          credentials: "include",
-          body: JSON.stringify(formData),
+          withCredentials: true,
         }
       );
 
-      const result = await response.json();
+      // const result = await response.json();
+        const result = response.data;
       if (result.success) {
         dispatch(loginSuccess(result));
         console.log(result);
