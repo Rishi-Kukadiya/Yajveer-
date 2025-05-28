@@ -11,8 +11,8 @@ import Sidebar from "./Home/sidebar";
 import ErrorPopup from "./ErrorPopup";
 import { Navigate } from "react-router";
 import { useDispatch } from "react-redux";
+import axios from "axios";
 import { loginSuccess } from "../Redux/authSlice";
-
 
 export default function Login() {
   const dispatch = useDispatch();
@@ -49,19 +49,30 @@ export default function Login() {
     if (!validate()) return;
 
     try {
-      const response = await fetch(
-        "https://yajveer-backend.vercel.app/api/v1/users/userlogin",
+      // const response = await fetch(
+      //   "https://yajveer-testing.vercel.app/api/v1/users/userlogin",
+      //   {
+      //     method: "POST",
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //     },
+      //     credentials: "include",
+      //     body: JSON.stringify(formData),
+      //   }
+      // );
+
+      const response = await axios.post(
+        "https://yajveer-testing.vercel.app/api/v1/users/userlogin",
+        formData,
         {
-          method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          credentials: "include",
-          body: JSON.stringify(formData),
+          withCredentials: true, // equivalent to fetch's `credentials: "include"`
         }
       );
 
-      const result = await response.json();
+      const result = response.data;
       if (result.success) {
         dispatch(loginSuccess(result));
         setPopupMessage(result.message);

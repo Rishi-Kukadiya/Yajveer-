@@ -4,6 +4,7 @@ import { Link } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import ErrorPopup from "../ErrorPopup";
 import { logout } from "../../Redux/authSlice";
+import axios from "axios";
 
 export default function Sidebar1({ onClose }) {
   const product = [
@@ -20,15 +21,23 @@ export default function Sidebar1({ onClose }) {
   const [popupMessage, setPopupMessage] = useState("");
   const handleLogout = async () => {
     try {
-      const response = await fetch(
+      // const response = await fetch(
+      //   "https://yajveer-testing.vercel.app/api/v1/users/userlogout",
+      //   {
+      //     method: "POST",
+      //     credentials: "include",
+      //   }
+      // );
+
+      const response = await axios.post(
         "https://yajveer-testing.vercel.app/api/v1/users/userlogout",
+        {},
         {
-          method: "POST",
-          credentials: "include",
+          withCredentials: true,
         }
       );
 
-      const result = await response.json();
+      const result =  response.data;
       if (result.success) {
         dispatch(logout());
         setPopupMessage("Logout successful");
@@ -40,8 +49,6 @@ export default function Sidebar1({ onClose }) {
       setPopupMessage("Logout error");
     }
   };
-
-  
 
   return (
     <div className="sidebar1-overlay">

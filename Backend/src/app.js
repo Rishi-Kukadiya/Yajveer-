@@ -8,17 +8,18 @@ const allowedOrigins = [
   "http://localhost:5173",
   "https://yajveer.vercel.app"  
 ];
+// !origin || allowedOrigins.includes(origin) ||
 // CORS middleware
 app.use(
   cors({
-    origin: function (origin, callback) {
-      if (!origin || allowedOrigins.includes(origin) || process.env.CORS_ORIGIN) {
-        callback(null, true);
-      } else {
-        callback(new Error("CORS not allowed for this origin"));
-      }
-    },
-    // origin: "*",
+    // origin: function (origin, callback) {
+    //   if (process.env.CORS_ORIGIN) {
+    //     callback(null, true);
+    //   } else {
+    //     callback(new Error("CORS not allowed for this origin"));
+    //   }
+    // },
+    origin: "*",
     credentials: true, // only if you're using cookies
   })
 );

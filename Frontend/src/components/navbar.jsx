@@ -4,6 +4,7 @@ import "../CSS/navbar.css";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../Redux/authSlice";
 import ErrorPopup from "./ErrorPopup";
+import axios from "axios";
 
 export default function Navbar() {
   const dispatch = useDispatch();
@@ -12,15 +13,23 @@ export default function Navbar() {
 
   const handleLogout = async () => {
     try {
-      const response = await fetch(
+      // const response = await fetch(
+      //   "https://yajveer-testing.vercel.app/api/v1/users/userlogout",
+      //   {
+      //     method: "POST",
+      //     credentials: "include",
+      //   }
+      // );
+
+      const response = await axios.post(
         "https://yajveer-testing.vercel.app/api/v1/users/userlogout",
+        {},
         {
-          method: "POST",
-          credentials: "include",
+          withCredentials: true,
         }
       );
 
-      const result = await response.json();
+      const result = response.data;
       if (result.success) {
         dispatch(logout());
         setPopupMessage("Logout successful");
@@ -32,7 +41,6 @@ export default function Navbar() {
       setPopupMessage("Logout error");
     }
   };
-
 
   return (
     <>
