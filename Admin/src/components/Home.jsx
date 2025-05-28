@@ -1,11 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link, Routes, Route } from 'react-router-dom'
-import { FiHome, FiUsers, FiBox, FiMessageSquare, FiSettings } from 'react-icons/fi'
+import { FiHome, FiUsers, FiBox, FiMessageSquare, FiSettings, FiMenu, FiX } from 'react-icons/fi'
 import { HiOutlineDocumentReport, HiOutlineCash } from 'react-icons/hi'
 import Products from './Products'
 import '../CSS/Home.css'
 
 function Home() {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+
   const metrics = [
     { id: 1, title: 'Total Users', value: '1,234', icon: <FiUsers /> },
     { id: 2, title: 'Total Products', value: '45', icon: <FiBox /> },
@@ -15,11 +21,14 @@ function Home() {
 
   return (
     <div className="admin-dashboard">
-      <aside className="sidebar">
+      <aside className={`sidebar ${isSidebarOpen ? 'active' : ''}`}>
         <div className="sidebar-header">
           <h2>Admin Panel</h2>
         </div>
         <nav className="sidebar-nav">
+          <button className="nav-close-btn" onClick={toggleSidebar}>
+            <FiX />
+          </button>
           <Link to="/admin" className="nav-item">
             <span className="nav-icon"><FiHome /></span>
             Dashboard
@@ -52,6 +61,11 @@ function Home() {
       </aside>
 
       <main className="main-content">
+        {!isSidebarOpen && (
+          <button className="sidebar-toggle" onClick={toggleSidebar}>
+            <FiMenu />
+          </button>
+        )}
         <Routes>
           <Route path="/" element={
             <>

@@ -1,12 +1,16 @@
 .admin-dashboard {
   display: flex;
   min-height: 100vh;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  position: relative;
 }
 
 .sidebar {
   width: 260px;
   background: white;
-  padding: 0; /* Remove padding from sidebar */
+  padding: 0;
   border-right: 1px solid #e5e7eb;
   height: 100vh;
   position: fixed;
@@ -16,6 +20,7 @@
   flex-direction: column;
   z-index: 1000;
   box-sizing: border-box;
+  transition: all 0.3s ease;
 }
 
 .sidebar-header {
@@ -40,6 +45,29 @@
   height: calc(100vh - 85px); /* Subtract header height */
   scrollbar-width: thin;
   scrollbar-color: #22c55e #f3f4f6;
+  position: relative;
+}
+
+.nav-close-btn {
+  position: absolute;
+  top: 0.5rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  color: #4b5563;
+  cursor: pointer;
+  font-size: 1.25rem;
+  padding: 0.5rem;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.nav-close-btn:hover {
+  background: #fee2e2;
+  color: #ef4444;
 }
 
 /* Webkit scrollbar styles */
@@ -81,11 +109,92 @@
 
 .main-content {
   flex: 1;
-  margin-left: 260px; /* Match exact sidebar width */
-  padding: 2rem;
+  margin-left: 260px;
+  padding: 2rem 2.5rem;
   background: #f3f4f6;
-  box-sizing: border-box; /* Include padding in width calculation */
-  min-width: 0; /* Prevent flex item from overflowing */
+  box-sizing: border-box;
+  min-width: 0;
+  width: calc(100% - 260px);
+  max-width: 100%;
+}
+
+@media (max-width: 1024px) {
+  .sidebar {
+    width: 220px;
+    transform: translateX(0);
+  }
+  
+  .main-content {
+    margin-left: 220px;
+    width: calc(100% - 220px);
+    padding: 1.5rem 2rem;
+  }
+}
+
+.sidebar-toggle {
+  display: none;
+  position: fixed;
+  top: 1rem;
+  z-index: 1001;
+  background: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.75rem;
+  font-size: 1.25rem;
+  color: #4b5563;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  left: 1rem;
+}
+
+.sidebar.active ~ .main-content .sidebar-toggle {
+  display: none;
+}
+
+.sidebar-toggle:hover {
+  color: #22c55e;
+  transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
+  .sidebar-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+  }
+  
+  .nav-close-btn {
+    display: flex;
+  }
+
+  .sidebar {
+    width: 250px;
+    transform: translateX(-100%);
+  }
+  
+  .sidebar.active {
+    transform: translateX(0);
+  }
+  
+  .main-content {
+    margin-left: 0;
+    width: 100%;
+    padding: 1.25rem 1.5rem;
+    position: relative;
+  }
+
+  /* Adjust header padding to prevent overlap with toggle button */
+  .dashboard-header {
+    padding-top: 0.5rem;
+    padding-left: 3.5rem;
+  }
+
+  .sidebar.active ~ .main-content .dashboard-header {
+    padding-left: 1rem;
+    padding-right: 3.5rem;
+  }
 }
 
 .dashboard-header {
@@ -103,7 +212,8 @@
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 1.5rem;
   width: 100%;
-  padding: 1rem;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 .metric-card {
@@ -146,27 +256,25 @@
 }
 
 @media (max-width: 768px) {
-  .admin-dashboard {
-    flex-direction: column;
-    padding-left: 0;
+  .sidebar {
+    width: 200px;
+    transform: translateX(-100%);
+    position: fixed;
   }
 
-  .sidebar {
-    width: 100%;
-    height: auto;
-    position: relative;
-    padding: 1rem;
-    min-height: auto;
+  .sidebar.active {
+    transform: translateX(0);
   }
 
   .main-content {
     margin-left: 0;
     width: 100%;
-    padding: 1rem;
+    padding: 1.25rem;
   }
 
   .metrics-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
   }
 
   .metric-card {
