@@ -37,8 +37,6 @@ export default function Navbar() {
         setPopupMessage("Logout failed: " + result.message);
       }
     } catch (error) {
-      // console.error("Logout error:", error);
-      // setPopupMessage("Logout error");
       if (error.response?.data?.message) {
         setPopupMessage(error.response.data.message);
       } else {
