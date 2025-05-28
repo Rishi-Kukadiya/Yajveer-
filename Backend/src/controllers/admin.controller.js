@@ -94,6 +94,7 @@ const loginAdmin = asyncHandler(async (req, res) => {
     httpOnly: true,
     secure: true,
     sameSite : "None",
+    maxAge: 30 * 24 * 60 * 60 * 1000,
   };
 
   return res
@@ -134,6 +135,7 @@ const logoutAdmin = asyncHandler(async (req, res) => {
     httpOnly: true,
     secure: true,
     sameSite: "None",
+    maxAge: 30 * 24 * 60 * 60 * 1000,
   };
 
   return res

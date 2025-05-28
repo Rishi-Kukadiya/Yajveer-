@@ -1,42 +1,37 @@
 import { Link } from "react-router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "../CSS/navbar.css";
-import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../Redux/authSlice";
 import ErrorPopup from "./ErrorPopup";
 import axios from "axios";
 
 export default function Navbar() {
-  const dispatch = useDispatch();
-  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [popupMessage, setPopupMessage] = useState("");
+
+  // Check localStorage on component mount
+  useEffect(() => {
+    const loginStatus = localStorage.getItem("isLoginUser") === "true";
+    setIsLoggedIn(loginStatus);
+  }, []);
 
   const handleLogout = async () => {
     try {
-      // const response = await fetch(
-      //   "https://yajveer-testing.vercel.app/api/v1/users/userlogout",
-      //   {
-      //     method: "POST",
-      //     credentials: "include",
-      //   }
-      // );
-
       const response = await axios.post(
         "https://yajveer-testing.vercel.app/api/v1/users/userlogout",
         {},
-        {
-          withCredentials: true,
-        }
+        { withCredentials: true }
       );
 
       const result = response.data;
       if (result.success) {
-        dispatch(logout());
+        localStorage.setItem("isLoginUser", "false");
+        setIsLoggedIn(false);
         setPopupMessage("Logout successful");
       } else {
         setPopupMessage("Logout failed: " + result.message);
       }
     } catch (error) {
+      localStorage.setItem("isLoginUser", "true"); // Keep user logged in on error
       if (error.response?.data?.message) {
         setPopupMessage(error.response.data.message);
       } else {

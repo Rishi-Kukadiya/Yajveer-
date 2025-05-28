@@ -1,9 +1,7 @@
 import "../../CSS/Home/sidebar1.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router";
-import { useDispatch, useSelector } from "react-redux";
 import ErrorPopup from "../ErrorPopup";
-import { logout } from "../../Redux/authSlice";
 import axios from "axios";
 
 export default function Sidebar1({ onClose }) {
@@ -16,37 +14,32 @@ export default function Sidebar1({ onClose }) {
     { id: 6, Name: "B12 Powder" },
   ];
 
-  const dispatch = useDispatch();
-  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [popupMessage, setPopupMessage] = useState("");
+
+  useEffect(() => {
+    const loginStatus = localStorage.getItem("isLoginUser") === "true";
+    setIsLoggedIn(loginStatus);
+  }, []);
+
   const handleLogout = async () => {
     try {
-      // const response = await fetch(
-      //   "https://yajveer-testing.vercel.app/api/v1/users/userlogout",
-      //   {
-      //     method: "POST",
-      //     credentials: "include",
-      //   }
-      // );
-
       const response = await axios.post(
         "https://yajveer-testing.vercel.app/api/v1/users/userlogout",
         {},
-        {
-          withCredentials: true,
-        }
+        { withCredentials: true }
       );
 
       const result = response.data;
       if (result.success) {
-        dispatch(logout());
+        localStorage.setItem("isLoginUser", "false");
+        setIsLoggedIn(false);
         setPopupMessage("Logout successful");
       } else {
         setPopupMessage("Logout failed: " + result.message);
       }
     } catch (error) {
-      // console.error("Logout error:", error);
-      // setPopupMessage("Logout error");
+      localStorage.setItem("isLoginUser", "true");
       if (error.response?.data?.message) {
         setPopupMessage(error.response.data.message);
       } else {
@@ -59,7 +52,7 @@ export default function Sidebar1({ onClose }) {
     <div className="sidebar1-overlay">
       <div className="sidebar1-content">
         <div className="sdclose" onClick={onClose}>
-          <i className="bi bi-x-lg  closeico"></i>
+          <i className="bi bi-x-lg closeico"></i>
         </div>
         <div className="sidebar1cont">
           {product.map((item) => (
@@ -88,6 +81,7 @@ export default function Sidebar1({ onClose }) {
               <span>yajveerayurved@gmail.com</span>
             </div>
           </Link>
+
           <div className="authSection">
             {!isLoggedIn ? (
               <>
@@ -111,3 +105,4 @@ export default function Sidebar1({ onClose }) {
     </div>
   );
 }
+

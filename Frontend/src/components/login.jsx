@@ -10,12 +10,10 @@ import Sidebar1 from "./Home/sidebar1";
 import Sidebar from "./Home/sidebar";
 import ErrorPopup from "./ErrorPopup";
 import { Navigate } from "react-router";
-import { useDispatch } from "react-redux";
 import axios from "axios";
-import { loginSuccess } from "../Redux/authSlice";
 
 export default function Login() {
-  const dispatch = useDispatch();
+
   const [redirect, setRedirect] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
@@ -74,13 +72,15 @@ export default function Login() {
 
       const result = response.data;
       if (result.success) {
-        dispatch(loginSuccess(result));
+        localStorage.setItem("isLoginUser", "true");
         setPopupMessage(result.message);
         setTimeout(() => setRedirect(true), 2000);
       } else {
+        localStorage.setItem("isLoginUser", "false");
         setPopupMessage(result.message);
       }
     } catch (error) {
+      localStorage.setItem("isLoginUser", "false");
       if (error.response?.data?.message) {
         setPopupMessage(error.response.data.message);
       } else {

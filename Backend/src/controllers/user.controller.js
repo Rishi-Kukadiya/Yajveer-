@@ -93,6 +93,7 @@ const loginUser = asyncHandler(async (req, res) => {
     httpOnly: true,
     secure: true,
     sameSite : "None",
+    maxAge: 30 * 24 * 60 * 60 * 1000,
   };
 
   return res
@@ -133,6 +134,7 @@ const logoutUser = asyncHandler(async (req, res) => {
     httpOnly: true,
     secure: true, // ✅ Dynamic based on environment
     sameSite: "None",
+    maxAge: 30 * 24 * 60 * 60 * 1000,
   };
 
   return res
