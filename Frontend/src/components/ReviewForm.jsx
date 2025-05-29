@@ -10,6 +10,7 @@ import Sidebar1 from "./Home/sidebar1";
 import axios from "axios";
 import ErrorPopup from "./ErrorPopup";
 import { useNavigate } from "react-router";
+import LoadingAnimation from "./LoadingAnimation";
 
 export default function ReviewForm() {
   const navigate = useNavigate();
@@ -20,6 +21,7 @@ export default function ReviewForm() {
   const [selectedFileName, setSelectedFileName] = useState("");
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [popupMessage, setPopupMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleOpenSidebar = () => setSidebarOpen(true);
   const handleCloseSidebar = () => setSidebarOpen(false);
@@ -46,7 +48,6 @@ export default function ReviewForm() {
     setSelectedFileName(file ? file.name : "");
   };
 
- 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -57,6 +58,8 @@ export default function ReviewForm() {
     formData.append("review", review);
     formData.append("rating", rating);
     formData.append("productPhoto", image);
+
+    setIsLoading(true);
 
     try {
       const response = await axios.post(
@@ -82,7 +85,7 @@ export default function ReviewForm() {
         if (err.response.status === 401) {
           setPopupMessage("Please login to submit a review.");
           setTimeout(() => {
-            navigate("/login"); 
+            navigate("/login");
           }, 2000);
         } else {
           setPopupMessage(
@@ -94,75 +97,88 @@ export default function ReviewForm() {
         console.error("Error submitting review:", err);
         setPopupMessage("Something went wrong. Please try again.");
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
     <>
-      {isSidebarOpen && <Sidebar1 onClose={handleCloseSidebar} />}
-      <Sidebar onOpenSidebar={handleOpenSidebar} />
-      <Navbar></Navbar>
-      <Navbar2></Navbar2>
-      <MainNav></MainNav>
+      {isLoading ? (
+        <LoadingAnimation />
+      ) : (
+        <>
+          {isSidebarOpen && <Sidebar1 onClose={handleCloseSidebar} />}
+          <Sidebar onOpenSidebar={handleOpenSidebar} />
+          <Navbar />
+          <Navbar2 />
+          <MainNav />
 
-      <section className="review-section">
-        <div className="review-box">
-          <div className="review-left">
-            <img src={Logo} alt="Ayurvedic Review" />
-          </div>
-          <div className="review-right">
-            <h2>Share Your Experience</h2>
-            <form className="review-form" onSubmit={handleSubmit}>
-              <div className="form-group">
-                <input
-                  type="text"
-                  placeholder="Your Name"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                />
+          <section className="review-section">
+            <div className="review-box">
+              <div className="review-left">
+                <img src={Logo} alt="Ayurvedic Review" />
               </div>
-              <div className="form-group image-upload-section">
-                <label className="image-upload-label">Upload Your Photo</label>
-                <div className="image-upload-container">
-                  <input
-                    type="file"
-                    id="imageInput"
-                    accept="image/png, image/jpeg"
-                    onChange={handleImageChange}
-                  />
-                  <label htmlFor="imageInput" className="browse-button">
-                    Browse
-                  </label>
-                  <span className="file-name">
-                    {selectedFileName || "No file chosen"}
-                  </span>
-                </div>
+              <div className="review-right">
+                <h2>Share Your Experience</h2>
+                <form className="review-form" onSubmit={handleSubmit}>
+                  <div className="form-group">
+                    <input
+                      type="text"
+                      placeholder="Your Name"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                    />
+                  </div>
+                  <div className="form-group image-upload-section">
+                    <label className="image-upload-label">
+                      Upload Your Photo
+                    </label>
+                    <div className="image-upload-container">
+                      <input
+                        type="file"
+                        id="imageInput"
+                        accept="image/png, image/jpeg"
+                        onChange={handleImageChange}
+                      />
+                      <label htmlFor="imageInput" className="browse-button">
+                        Browse
+                      </label>
+                      <span className="file-name">
+                        {selectedFileName || "No file chosen"}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="form-group">
+                    <textarea
+                      placeholder="Write your review..."
+                      rows="4"
+                      value={review}
+                      onChange={(e) => setReview(e.target.value)}
+                    ></textarea>
+                  </div>
+                  <div className="form-group">
+                    <input
+                      type="number"
+                      placeholder="Rating (1-5)"
+                      value={rating}
+                      onChange={(e) => setRating(e.target.value)}
+                    />
+                  </div>
+                  <button type="submit" className="submit-btn">
+                    Submit Review
+                  </button>
+                </form>
               </div>
-              <div className="form-group">
-                <textarea
-                  placeholder="Write your review..."
-                  rows="4"
-                  value={review}
-                  onChange={(e) => setReview(e.target.value)}
-                ></textarea>
-              </div>
-              <div className="form-group">
-                <input
-                  type="number"
-                  placeholder="Rating (1-5)"
-                  value={rating}
-                  onChange={(e) => setRating(e.target.value)}
-                />
-              </div>
-              <button type="submit" className="submit-btn">
-                Submit Review
-              </button>
-            </form>
-          </div>
-        </div>
-      </section>
-      <Footer></Footer>
-      <ErrorPopup message={popupMessage} onClose={() => setPopupMessage("")} />
+            </div>
+          </section>
+          <Footer />
+          <ErrorPopup
+            message={popupMessage}
+            onClose={() => setPopupMessage("")}
+          />
+        </>
+      )}
     </>
   );
 }
