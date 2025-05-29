@@ -57,7 +57,9 @@ export default function Navbar() {
                 <p>About Us</p>
               </Link>
               <p>Free Delivery</p>
+              <Link to="/returnpolicy">
               <p>Returns Policy</p>
+              </Link>
             </div>
             <div className="navbar-right">
               <div className="navbar-dropdown">
