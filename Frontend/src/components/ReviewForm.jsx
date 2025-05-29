@@ -1,30 +1,113 @@
-import { useState  } from "react";
+import { useState } from "react";
 import Navbar from "./navbar";
 import Navbar2 from "./navbar2";
 import MainNav from "./mainnav";
 import Footer from "./Footer/Footer";
 import "../CSS/ReviewForm.css";
 import Logo from "../assets/Yajveer.png";
-import Sidebar from './Home/sidebar';
-import Sidebar1 from './Home/sidebar1';
+import Sidebar from "./Home/sidebar";
+import Sidebar1 from "./Home/sidebar1";
+import axios from "axios";
+import ErrorPopup from "./ErrorPopup";
+import { useNavigate } from "react-router";
+
 export default function ReviewForm() {
+  const navigate = useNavigate();
+  const [name, setName] = useState("");
+  const [review, setReview] = useState("");
+  const [rating, setRating] = useState("");
+  const [image, setImage] = useState(null);
   const [selectedFileName, setSelectedFileName] = useState("");
   const [isSidebarOpen, setSidebarOpen] = useState(false);
+  const [popupMessage, setPopupMessage] = useState("");
+
   const handleOpenSidebar = () => setSidebarOpen(true);
   const handleCloseSidebar = () => setSidebarOpen(false);
 
+  const validate = () => {
+    const newErrors = {};
+    if (!name.trim()) newErrors.name = "Name is required";
+    else if (!image) newErrors.image = "Photo is required";
+    else if (!review.trim()) newErrors.review = "Review is required";
+    else if (!rating || rating < 1 || rating > 5)
+      newErrors.rating = "Rating must be between 1 and 5";
+
+    if (Object.keys(newErrors).length > 0) {
+      setPopupMessage(Object.values(newErrors).join(", "));
+      return false;
+    }
+
+    return true;
+  };
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
-    if (file) {
-      setSelectedFileName(file.name);
-      setPreviewUrl(URL.createObjectURL(file));
+    setImage(file);
+    setSelectedFileName(file ? file.name : "");
+  };
+
+  // const handleImageChange = (e) => {
+  //   const file = e.target.files[0];
+  //   if (file) {
+  //     setSelectedFileName(file.name);
+  //     setPreviewUrl(URL.createObjectURL(file));
+  //   }
+  // };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!validate()) return;
+
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("review", review);
+    formData.append("rating", rating);
+    formData.append("productPhoto", image);
+    // https://yajveer-testing.vercel.app
+    try {
+      const response = await axios.post(
+        "https://yajveer-testing.vercel.app/api/v1/users/review",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+          withCredentials: true,
+        }
+      );
+      setPopupMessage("Review submitted successfully!");
+      setName("");
+      setReview("");
+      setRating("");
+      setImage(null);
+      setSelectedFileName("");
+    } catch (err) {
+      console.error("Error submitting review:", err.response?.data || err);
+      // setPopupMessage("Failed to submit review. Please try again.");
+      if (err.response) {
+        if (err.response.status === 401) {
+          setPopupMessage("Please login to submit a review.");
+          setTimeout(() => {
+            navigate("/login"); // Change to your login route if needed
+          }, 2000);
+        } else {
+          setPopupMessage(
+            err.response.data.message ||
+              "Failed to submit review. Please try again."
+          );
+        }
+      } else {
+        console.error("Error submitting review:", err);
+        setPopupMessage("Something went wrong. Please try again.");
+      }
     }
   };
+
   return (
     <>
-     {isSidebarOpen && <Sidebar1 onClose={handleCloseSidebar} />}
-     <Sidebar onOpenSidebar={handleOpenSidebar} />
+      {isSidebarOpen && <Sidebar1 onClose={handleCloseSidebar} />}
+      <Sidebar onOpenSidebar={handleOpenSidebar} />
       <Navbar></Navbar>
       <Navbar2></Navbar2>
       <MainNav></MainNav>
@@ -36,19 +119,31 @@ export default function ReviewForm() {
           </div>
           <div className="review-right">
             <h2>Share Your Experience</h2>
-            <form className="review-form">
+            <form className="review-form" onSubmit={handleSubmit}>
               <div className="form-group">
-                <input type="text" placeholder="Your Name" required />
+                {/* <input type="text" placeholder="Your Name" required /> */}
+                <input
+                  type="text"
+                  placeholder="Your Name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
               </div>
               <div className="form-group image-upload-section">
                 <label className="image-upload-label">Upload Your Photo</label>
                 <div className="image-upload-container">
-                  <input
+                  {/* <input
                     type="file"
                     id="imageInput"
                     accept="image/png, image/jpeg"
                     onChange={(e) => handleImageChange(e)}
                     required
+                  /> */}
+                  <input
+                    type="file"
+                    id="imageInput"
+                    accept="image/png, image/jpeg"
+                    onChange={handleImageChange}
                   />
                   <label htmlFor="imageInput" className="browse-button">
                     Browse
@@ -59,19 +154,31 @@ export default function ReviewForm() {
                 </div>
               </div>
               <div className="form-group">
-                <textarea
+                {/* <textarea
                   placeholder="Write your review..."
                   rows="4"
                   required
+                ></textarea> */}
+                <textarea
+                  placeholder="Write your review..."
+                  rows="4"
+                  value={review}
+                  onChange={(e) => setReview(e.target.value)}
                 ></textarea>
               </div>
               <div className="form-group">
-                <input
+                {/* <input
                   type="number"
                   placeholder="Rating (1-5)"
                   min="1"
                   max="5"
                   required
+                /> */}
+                <input
+                  type="number"
+                  placeholder="Rating (1-5)"
+                  value={rating}
+                  onChange={(e) => setRating(e.target.value)}
                 />
               </div>
               <button type="submit" className="submit-btn">
@@ -82,6 +189,7 @@ export default function ReviewForm() {
         </div>
       </section>
       <Footer></Footer>
+      <ErrorPopup message={popupMessage} onClose={() => setPopupMessage("")} />
     </>
   );
 }
