@@ -3,18 +3,22 @@ import Ayur from "../assets/logp.jpg";
 import { Link } from "react-router";
 import ErrorPopup from "./ErrorPopup";
 import { Navigate } from "react-router";
-import { useDispatch } from "react-redux";
-import { loginSuccess } from "../Redux/authSlice";
 import { useState } from "react";
 import axios from "axios";
-
+import { useEffect } from "react";
 export default function Login() {
-  const dispatch = useDispatch();
   const [redirect, setRedirect] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+
+  useEffect(() => {
+    const isLoggedIn = sessionStorage.getItem("isLoggedInAdmin");
+    if (isLoggedIn === "true") {
+      setRedirect(true);
+    }
+  }, []);
 
   const [popupMessage, setPopupMessage] = useState("");
 
@@ -45,7 +49,7 @@ export default function Login() {
 
     try {
       const response = await axios.post(
-        "https://yajveer-testing.vercel.app/api/v1/users/adminlogin",
+        `${import.meta.env.VITE_SERVER}/api/v1/users/adminlogin`,
         formData,
         {
           headers: {
@@ -55,19 +59,16 @@ export default function Login() {
         }
       );
 
-      // const result = await response.json();
-        const result = response.data;
+      const result = response.data;
       if (result.success) {
-        dispatch(loginSuccess(result));
         console.log(result);
+        sessionStorage.setItem("isLoggedInAdmin", "true");
         setPopupMessage(result.message);
         setTimeout(() => setRedirect(true), 2000);
       } else {
         setPopupMessage(result.message);
       }
     } catch (error) {
-      // console.error("Error posting data:", error);
-      // setPopupMessage("Network error or server not responding.");
       if (error.response?.data?.message) {
         setPopupMessage(error.response.data.message);
       } else {
