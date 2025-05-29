@@ -25,7 +25,7 @@ export default function Sidebar1({ onClose }) {
   const handleLogout = async () => {
     try {
       const response = await axios.post(
-        "https://yajveer-testing.vercel.app/api/v1/users/userlogout",
+        `${import.meta.env.VITE_SERVER}/api/v1/users/userlogout`,
         {},
         { withCredentials: true }
       );

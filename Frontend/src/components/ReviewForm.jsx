@@ -46,14 +46,7 @@ export default function ReviewForm() {
     setSelectedFileName(file ? file.name : "");
   };
 
-  // const handleImageChange = (e) => {
-  //   const file = e.target.files[0];
-  //   if (file) {
-  //     setSelectedFileName(file.name);
-  //     setPreviewUrl(URL.createObjectURL(file));
-  //   }
-  // };
-
+ 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -64,10 +57,10 @@ export default function ReviewForm() {
     formData.append("review", review);
     formData.append("rating", rating);
     formData.append("productPhoto", image);
-    // https://yajveer-testing.vercel.app
+
     try {
       const response = await axios.post(
-        "https://yajveer-testing.vercel.app/api/v1/users/review",
+        `${import.meta.env.VITE_SERVER}/api/v1/users/review`,
         formData,
         {
           headers: {
@@ -84,12 +77,12 @@ export default function ReviewForm() {
       setSelectedFileName("");
     } catch (err) {
       console.error("Error submitting review:", err.response?.data || err);
-      // setPopupMessage("Failed to submit review. Please try again.");
+
       if (err.response) {
         if (err.response.status === 401) {
           setPopupMessage("Please login to submit a review.");
           setTimeout(() => {
-            navigate("/login"); // Change to your login route if needed
+            navigate("/login"); 
           }, 2000);
         } else {
           setPopupMessage(
@@ -121,7 +114,6 @@ export default function ReviewForm() {
             <h2>Share Your Experience</h2>
             <form className="review-form" onSubmit={handleSubmit}>
               <div className="form-group">
-                {/* <input type="text" placeholder="Your Name" required /> */}
                 <input
                   type="text"
                   placeholder="Your Name"
@@ -132,13 +124,6 @@ export default function ReviewForm() {
               <div className="form-group image-upload-section">
                 <label className="image-upload-label">Upload Your Photo</label>
                 <div className="image-upload-container">
-                  {/* <input
-                    type="file"
-                    id="imageInput"
-                    accept="image/png, image/jpeg"
-                    onChange={(e) => handleImageChange(e)}
-                    required
-                  /> */}
                   <input
                     type="file"
                     id="imageInput"
@@ -154,11 +139,6 @@ export default function ReviewForm() {
                 </div>
               </div>
               <div className="form-group">
-                {/* <textarea
-                  placeholder="Write your review..."
-                  rows="4"
-                  required
-                ></textarea> */}
                 <textarea
                   placeholder="Write your review..."
                   rows="4"
@@ -167,13 +147,6 @@ export default function ReviewForm() {
                 ></textarea>
               </div>
               <div className="form-group">
-                {/* <input
-                  type="number"
-                  placeholder="Rating (1-5)"
-                  min="1"
-                  max="5"
-                  required
-                /> */}
                 <input
                   type="number"
                   placeholder="Rating (1-5)"

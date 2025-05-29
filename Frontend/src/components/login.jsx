@@ -47,26 +47,15 @@ export default function Login() {
     if (!validate()) return;
 
     try {
-      // const response = await fetch(
-      //   "https://yajveer-testing.vercel.app/api/v1/users/userlogin",
-      //   {
-      //     method: "POST",
-      //     headers: {
-      //       "Content-Type": "application/json",
-      //     },
-      //     credentials: "include",
-      //     body: JSON.stringify(formData),
-      //   }
-      // );
 
       const response = await axios.post(
-        "https://yajveer-testing.vercel.app/api/v1/users/userlogin",
+        `${import.meta.env.VITE_SERVER}/api/v1/users/userlogin`,
         formData,
         {
           headers: {
             "Content-Type": "application/json",
           },
-          withCredentials: true, // equivalent to fetch's `credentials: "include"`
+          withCredentials: true, 
         }
       );
 

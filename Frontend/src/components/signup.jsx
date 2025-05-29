@@ -54,7 +54,7 @@ export default function SignUp() {
 
     try {
       const response = await fetch(
-        "https://yajveer-testing.vercel.app/api/v1/users/userregister",
+        `${import.meta.env.VITE_SERVER}/api/v1/users/userregister`,
         {
           method: "POST",
           headers: {
@@ -90,8 +90,7 @@ export default function SignUp() {
   return (
     <>
       <>
-        {/* <Sidebar1></Sidebar1>
-        <Sidebar></Sidebar> */}
+
         {isSidebarOpen && <Sidebar1 onClose={handleCloseSidebar} />}
         <Sidebar onOpenSidebar={handleOpenSidebar} />
         <Navbar></Navbar>

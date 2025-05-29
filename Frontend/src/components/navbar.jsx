@@ -8,7 +8,7 @@ export default function Navbar() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [popupMessage, setPopupMessage] = useState("");
 
-  // Check localStorage on component mount
+  
   useEffect(() => {
     const loginStatus = localStorage.getItem("isLoginUser") === "true";
     setIsLoggedIn(loginStatus);
@@ -17,7 +17,7 @@ export default function Navbar() {
   const handleLogout = async () => {
     try {
       const response = await axios.post(
-        "https://yajveer-testing.vercel.app/api/v1/users/userlogout",
+        `${import.meta.env.VITE_SERVER}/api/v1/users/userlogout`,
         {},
         { withCredentials: true }
       );
@@ -31,7 +31,7 @@ export default function Navbar() {
         setPopupMessage("Logout failed: " + result.message);
       }
     } catch (error) {
-      localStorage.setItem("isLoginUser", "true"); // Keep user logged in on error
+      localStorage.setItem("isLoginUser", "true"); 
       if (error.response?.data?.message) {
         setPopupMessage(error.response.data.message);
       } else {
