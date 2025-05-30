@@ -133,7 +133,7 @@ export default function Login() {
                         onChange={handleChange}
                       ></input>
                     </div>
-                    <p>Forgot Your Password</p>
+                    <Link to="/forgotpassword"><p>Forgot Your Password</p></Link>
                     <button>Login</button>
                   </form>
 
