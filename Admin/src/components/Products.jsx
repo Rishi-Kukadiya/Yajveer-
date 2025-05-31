@@ -19,6 +19,7 @@ const Products = () => {
     benefits: [""],
     actualPrice: "",
     files: [],
+    type: "box", // Default value
   });
 
   const handleChange = (e) => {
@@ -52,8 +53,23 @@ const Products = () => {
 
   const handleImageUpload = (e) => {
     const files = Array.from(e.target.files);
+    
+    // Validate total number of photos
     if (files.length + formData.photos.length > 7) {
-      setPopupMessage("You can only upload up to 7 photos");
+      setPopupMessage("You can only upload up to 7 photos in total");
+      return;
+    }
+
+    // Validate file types and sizes
+    const validTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/webp'];
+    const maxSize = 5 * 1024 * 1024; // 5MB
+
+    const invalidFiles = files.filter(
+      file => !validTypes.includes(file.type) || file.size > maxSize
+    );
+
+    if (invalidFiles.length > 0) {
+      setPopupMessage("Please only upload images (JPG, PNG, WEBP) less than 5MB in size");
       return;
     }
 
@@ -61,39 +77,76 @@ const Products = () => {
     setFormData((prev) => ({
       ...prev,
       photos: [...prev.photos, ...newPhotos],
-      files: [...prev.files, ...files], // Store actual File objects
+      files: [...prev.files, ...files],
     }));
   };
 
   const validateForm = () => {
+    if (formData.files.length === 0) {
+      setPopupMessage("At least one product photo is required");
+      return false;
+    }
+    
     if (!formData.productName.trim()) {
       setPopupMessage("Product name is required");
       return false;
     }
-    if (!formData.description.trim()) {
-      setPopupMessage("Description is required");
+    
+    if (!formData.description.trim() || formData.description.trim().length < 10) {
+      setPopupMessage("Description is required and should be at least 10 characters long");
       return false;
     }
+    
     if (!formData.actualPrice || formData.actualPrice <= 0) {
-      setPopupMessage("Valid price is required");
+      setPopupMessage("Price must be greater than 0");
       return false;
     }
+    
     if (formData.discount < 0 || formData.discount > 100) {
       setPopupMessage("Discount must be between 0 and 100");
       return false;
     }
-    if (formData.ingredients.some((ing) => !ing.trim())) {
-      setPopupMessage("All ingredients must be filled");
+
+    if (!formData.type) {
+      setPopupMessage("Please select a packaging type");
       return false;
     }
-    if (formData.benefits.some((ben) => !ben.trim())) {
-      setPopupMessage("All benefits must be filled");
+    
+    const filledIngredients = formData.ingredients.filter((ing) => ing.trim());
+    if (filledIngredients.length === 0) {
+      setPopupMessage("At least one ingredient is required");
       return false;
     }
+    
+    const filledBenefits = formData.benefits.filter((ben) => ben.trim());
+    if (filledBenefits.length === 0) {
+      setPopupMessage("At least one benefit is required");
+      return false;
+    }
+    
     return true;
   };
 
+  // Cleanup function for URL objects
+  React.useEffect(() => {
+    return () => {
+      // Cleanup URLs when component unmounts
+      formData.photos.forEach((photoUrl) => {
+        if (photoUrl.startsWith('blob:')) {
+          URL.revokeObjectURL(photoUrl);
+        }
+      });
+    };
+  }, [formData.photos]);
+
   const resetForm = () => {
+    // Cleanup URLs when form is reset
+    formData.photos.forEach((photoUrl) => {
+      if (photoUrl.startsWith('blob:')) {
+        URL.revokeObjectURL(photoUrl);
+      }
+    });
+    
     setFormData({
       photos: [],
       productName: "",
@@ -103,7 +156,7 @@ const Products = () => {
       benefits: [""],
       actualPrice: "",
       files: [],
-      rating: 0,
+      type: "box", // Reset to default value
     });
   };
 
@@ -113,27 +166,29 @@ const Products = () => {
     if (!validateForm()) {
       return;
     }
+
     setIsLoading(true);
     try {
       const formDataToSend = new FormData();
-      formDataToSend.append("productName", formData.productName);
-      formDataToSend.append("description", formData.description);
+      formDataToSend.append("productName", formData.productName.trim());
+      formDataToSend.append("description", formData.description.trim());
       formDataToSend.append("discount", formData.discount);
       formDataToSend.append("actualPrice", formData.actualPrice);
-      formDataToSend.append(
-        "ingredients",
-        JSON.stringify(formData.ingredients.filter((ing) => ing.trim()))
-      );
-      formDataToSend.append(
-        "benefits",
-        JSON.stringify(formData.benefits.filter((ben) => ben.trim()))
-      );
+      formDataToSend.append("type", formData.type);
+      
+      // Filter out empty entries before sending
+      const filteredIngredients = formData.ingredients.filter((ing) => ing.trim());
+      const filteredBenefits = formData.benefits.filter((ben) => ben.trim());
+      
+      formDataToSend.append("ingredients", JSON.stringify(filteredIngredients));
+      formDataToSend.append("benefits", JSON.stringify(filteredBenefits));
 
-      formData.files.forEach((file, index) => {
+      // Append photos
+      formData.files.forEach((file) => {
         formDataToSend.append("photos", file);
       });
 
-      await axios.post(
+      const response = await axios.post(
         `${import.meta.env.VITE_SERVER}/api/v1/products/admin/addproducts`,
         formDataToSend,
         {
@@ -144,13 +199,21 @@ const Products = () => {
         }
       );
 
-      setShowForm(false);
-      resetForm();
-      setPopupMessage("Product successfully added!");
+      if (response.data && response.data.statusCode === 201) {
+        setPopupMessage("Product successfully added!");
+        setShowForm(false);
+        resetForm();
+        
+        // You might want to refresh the products list here
+        // await fetchProducts();
+      } else {
+        throw new Error(response.data?.message || "Failed to add product");
+      }
     } catch (error) {
+      console.error("Error adding product:", error);
       setPopupMessage(
         "Error adding product: " +
-          (error.response?.data?.message || error.message)
+          (error.response?.data?.message || error.message || "Unknown error occurred")
       );
     } finally {
       setIsLoading(false);
@@ -158,6 +221,12 @@ const Products = () => {
   };
 
   const handleCloseForm = () => {
+    // Cleanup URLs when form is closed
+    formData.photos.forEach((photoUrl) => {
+      if (photoUrl.startsWith('blob:')) {
+        URL.revokeObjectURL(photoUrl);
+      }
+    });
     setShowForm(false);
     resetForm();
   };
@@ -271,6 +340,19 @@ const Products = () => {
                         value={formData.discount}
                         onChange={handleChange}
                       />
+                    </div>
+
+                    <div className="form-group">
+                      <label>Packaging Type</label>
+                      <select
+                        name="type"
+                        value={formData.type}
+                        onChange={handleChange}
+                        className="packaging-select"
+                      >
+                        <option value="box">Box</option>
+                        <option value="pouch">Pouch</option>
+                      </select>
                     </div>
                   </div>
 
