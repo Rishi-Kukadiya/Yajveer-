@@ -1,135 +1,111 @@
-/* General Container */
 .contactus-container {
-  padding: 2.5rem;
-  background: #f3f4f7;
-  font-family: "Playfair Display", serif;
+    width: 100%;
+    overflow-x: auto;
 }
 
-/* Title */
-.contactus-title {
-  font-size: 2.7rem;
-  margin-bottom: 2rem;
-  font-weight: 700;
-  text-align: center;
-  color: #2c3e50;
-}
-
-/* Table Wrapper */
 .table-wrapper {
-  overflow-x: auto;
-  border-radius: 12px;
-  background: #ffffff;
-  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.08);
-  padding: 1.5rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
-/* Table */
 .contactus-table {
-  width: 100%;
-  border-collapse: collapse;
-  color: #2f3542;
-  font-size: 16px;
+    width: 100%;
+    min-width: 900px; /* ✅ Makes it scrollable on smaller screens */
+    border-collapse: collapse;
+    table-layout: fixed;
+    font-size: 15px;
+    background-color: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    color: #000;
 }
 
-/* Table Header */
-.contactus-table th {
-  background: #2d3436; /* dark background for header */
-  color: #ffffff;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  padding: 16px;
-  font-size: 15px;
+.contactus-table thead {
+    background-color: #2f3542;
+    color: #fff;
 }
 
-/* Table Data */
+.contactus-table th,
 .contactus-table td {
-  padding: 14px 18px;
-  border-bottom: 1px solid #ecf0f1;
-  white-space: nowrap;
+    padding: 12px 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    vertical-align: top;
 }
 
-/* Hover on row */
-.contactus-table tbody tr:hover {
-  background-color: #f1f2f6;
-  transition: background 0.2s ease;
+.contactus-table th:nth-child(1),
+.contactus-table td:nth-child(1) {
+    width: 15%; /* Name */
 }
 
-/* No data row */
-.no-data {
-  text-align: center;
-  padding: 2rem;
-  color: #999;
-  font-style: italic;
-  background-color: #fefefe;
+.contactus-table th:nth-child(2),
+.contactus-table td:nth-child(2) {
+    width: 20%; /* Email */
 }
 
-/* Button Cell */
+.contactus-table th:nth-child(3),
+.contactus-table td:nth-child(3) {
+    width: 12%; /* Phone */
+}
+
+.contactus-table th:nth-child(4),
+.contactus-table td:nth-child(4) {
+    width: 15%; /* Subject */
+}
+
+.contactus-table th:nth-child(5),
+.contactus-table td:nth-child(5) {
+    width: 28%; /* Message */
+}
+
+.contactus-table th:nth-child(6),
+.contactus-table td:nth-child(6) {
+    width: 10%; /* Action */
+}
+
+.message-column {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    word-break: break-word;
+}
+
+.wrap-text {
+    word-break: break-word;
+    white-space: normal;
+}
+
 .button-cell {
-  display: flex;
-  gap: 0.75rem;
+    text-align: center;
 }
 
-.contactus-table thead tr th:first-child {
-  border-top-left-radius: 12px;
-  border-bottom-left-radius: 12px;
-}
-
-.contactus-table thead tr th:last-child {
-  border-top-right-radius: 12px;
-  border-bottom-right-radius: 12px;
-}
-
-/* Action Buttons */
-.resolve-btn,
-.deletee-btn {
-  padding: 10px 18px;
-  border: none;
-  border-radius: 30px;
-  font-weight: 600;
-  font-family: "Playfair Display", serif;
-  font-size: 14px;
-  color: white;
-  cursor: pointer;
-  transition: all 0.3s ease-in-out;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-/* Resolve Button */
 .resolve-btn {
-  background: linear-gradient(to right, #28a745, #218838);
+    background-color: #2ecc71;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 25px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    white-space: nowrap;
 }
 
 .resolve-btn:hover {
-  background: linear-gradient(to right, #1e7e34, #19692c);
-  transform: translateY(-2px);
+    background-color: #27ae60;
 }
 
-/* Delete Button */
-.deletee-btn {
-  background: linear-gradient(to right, #dc3545, #c82333);
+.no-data {
+    text-align: center;
+    padding: 20px;
 }
 
-.deletee-btn:hover {
-  background: linear-gradient(to right, #bd2130, #a71d2a);
-  transform: translateY(-2px);
-}
+@media screen and (max-width: 768px) {
+    .contactus-table {
+        font-size: 13px;
+    }
 
-/* Responsive */
-@media (max-width: 768px) {
-  .contactus-table th,
-  .contactus-table td {
-    font-size: 14px;
-    padding: 12px;
-  }
-
-  .resolve-btn,
-  .deletee-btn {
-    padding: 6px 12px;
-    font-size: 12px;
-  }
-
-  .contactus-title {
-    font-size: 2rem;
-  }
+    .resolve-btn {
+        padding: 6px 12px;
+        font-size:12px;
+      }
 }
