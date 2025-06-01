@@ -58,7 +58,9 @@ export default function Forgotpass1() {
                   />
                 </div>
                 <Link to="/forgotpassword2">
-                  <button type="submit">Verify OTP</button>
+                  <button type="submit" className="forgot-btn3">
+                    Verify OTP
+                  </button>
                 </Link>
               </form>
             </div>

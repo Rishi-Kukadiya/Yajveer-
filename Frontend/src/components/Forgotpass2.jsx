@@ -79,7 +79,9 @@ export default function Forgotpass2() {
                   />
                 </div>
                 <Link to="/login">
-                  <button type="submit">Reset Password</button>
+                  <button type="submit" className="forgot-btn2">
+                    Reset Password
+                  </button>
                 </Link>
               </form>
             </div>
