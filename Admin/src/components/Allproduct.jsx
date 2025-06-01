@@ -1,162 +1,77 @@
-import "../CSS/Allproduct.css";
+import React from "react";
 import { useSelector } from "react-redux";
-import { FiTrash2 } from "react-icons/fi";
-import { useState, useEffect, useRef, useCallback } from "react";
+import { Link } from "react-router-dom";
+import "../CSS/Allproduct.css"; // We'll create this CSS file
+import LoadingAnimation from "./LoadingAnimation"; // Assuming you have this
 
-export default function Allproduct() {
-  const { data: products } = useSelector((state) => state.cart);
-  const [currentSlides, setCurrentSlides] = useState({});
-  const intervalsRef = useRef({});
-
-  
-  useEffect(() => {
-    if (!products?.length) return;
-
-    setCurrentSlides(prev => {
-      const newSlides = { ...prev };
-      products.forEach((product) => {
-        if (!newSlides[product._id]) {
-          newSlides[product._id] = 0;
-        }
-      });
-      return newSlides;
-    });
-  }, [products]);
-
-  
-  const setupIntervals = useCallback(() => {
-    if (!products?.length) return;
-
-    
-    Object.values(intervalsRef.current).forEach(interval => {
-      if (interval) clearInterval(interval);
-    });
-    intervalsRef.current = {};
-
-    
-    products.forEach((product) => {
-      if (product._id && product.photos.length > 1) {
-        intervalsRef.current[product._id] = setInterval(() => {
-          setCurrentSlides(prev => ({
-            ...prev,
-            [product._id]: (prev[product._id] + 1) % product.photos.length
-          }));
-        }, 3000);
-      }
-    });
-  }, [products]);
-
-  
-  useEffect(() => {
-    setupIntervals();
-
-    return () => {
-      Object.values(intervalsRef.current).forEach(interval => {
-        if (interval) clearInterval(interval);
-      });
-      intervalsRef.current = {};
-    };
-  }, [setupIntervals]);
-
-  
+const Allproduct = () => {
+  const { data: products, loading, error } = useSelector((state) => state.cart); // Assuming 'cart' slice holds products
+  console.log(products);
   const calculateDiscountedPrice = (actualPrice, discount) => {
     return Math.round(actualPrice - (actualPrice * discount) / 100);
   };
 
-  
-  const parseJSONString = (str) => {
-    try {
-      // Handle both string and array inputs
-      if (typeof str === 'string') {
-        const cleaned = str[0] === '[' ? JSON.parse(str) : str;
-        return Array.isArray(cleaned) ? cleaned : [cleaned];
-      }
-      return Array.isArray(str) ? str : [str];
-    } catch {
-      return [];
-    }
-  };
+  if (loading) {
+    return <LoadingAnimation />;
+  }
 
-  if (!products?.length) {
-    return <div className="all-products-container">
-      <h1>All Products</h1>
-      <p className="no-products">No products available</p>
-    </div>;
+  if (error) {
+    return (
+      <div className="error-message">
+        Error loading products: {error.message || "Unknown error"}
+      </div>
+    );
+  }
+
+  if (!products || products.length === 0) {
+    return <div className="no-products-message">No products found.</div>;
   }
 
   return (
     <div className="all-products-container">
-      <h1>All Products</h1>
-      <div className="products-grid">
-        {products?.map((product, index) => (
-          <div key={product._id || index} className="product-card">
-            <div className="product-image">
-              <div className="slider-container">
-                {product.photos?.map((photo, photoIndex) => (
+      <h1 className="page-title">All Products</h1>
+      <div className="mm">
+        <div className="ml">
+          {products.map((product) => (
+            <div className="Menucard" key={product._id}>
+              <Link
+                to={`/admin/products/${product._id}`}
+                className="details-button-link"
+              >
+                <div className="menui">
                   <img
-                    key={photoIndex}
-                    src={photo}
-                    alt={`${product.productName} - ${photoIndex + 1}`}
-                    loading="lazy"
-                    className={photoIndex === currentSlides[product._id] ? 'active' : ''}
+                    src={product.photos[0]}
+                    alt={product.productName}
+                    className="ig"
                   />
-                ))}
-                <div className="slider-dots">
-                  {product.photos?.map((_, photoIndex) => (
-                    <span
-                      key={photoIndex}
-                      className={`dot ${photoIndex === currentSlides[product._id] ? 'active' : ''}`}
-                    />
-                  ))}
                 </div>
+              </Link>
+              <div className="pname">
+                <p>{product.productName}</p>
               </div>
-              <button className="delete-btn">
-                <FiTrash2 />
-              </button>
-            </div>
-            <div className="product-info">
-              <h3 className="product-name">{product.productName}</h3>
-              <div className="price-info">
-                <div className="prices">
-                  <span className="actual-price">₹{product.actualPrice}</span>
-                  {product.discount > 0 && (
-                    <span className="discounted-price">
-                      ₹{calculateDiscountedPrice(product.actualPrice, product.discount)}
-                    </span>
+              <div className="pprice">
+                <p className="dis">{product.discount}%OFF</p>
+                <p className="dsp">₹{product.actualPrice}</p>
+                <p className="acp">
+                  ₹
+                  {Math.floor(
+                    product.actualPrice +
+                      (product.discount * product.actualPrice) / 100
                   )}
-                </div>
-                {product.discount > 0 && (
-                  <span className="discount-badge">{product.discount}% OFF</span>
-                )}
+                </p>
               </div>
-              <div className="packaging-type">
-                Type: <span>{product.type}</span>
-              </div>
-              <p className="product-description-full">{product.description}</p>
-
-              <div className="product-lists">
-                <div className="ingredients">
-                  <h4>Ingredients</h4>
-                  <ul>
-                    {JSON.parse(product.ingredients).map((ingredient, i) => (
-                      <li key={i}>{ingredient}</li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div className="benefits">
-                  <h4>Benefits</h4>
-                  <ul>
-                    {JSON.parse(product.benefits).map((benefit, i) => (
-                      <li key={i}>{benefit}</li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
+              <Link
+                to={`/admin/products/${product._id}`}
+                className="details-button-link"
+              >
+                <button className="menucart">Details</button>
+              </Link>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );
-}
+};
+
+export default Allproduct;

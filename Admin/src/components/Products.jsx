@@ -6,6 +6,8 @@ import "../CSS/Products.css";
 import LoadingAnimation from "./LoadingAnimation";
 import axios from "axios";
 import Allproduct from "./Allproduct";
+import { Routes, Route } from 'react-router-dom'; // Import Routes and Route
+import ProductDetails from "./Productdetails";
 
 const Products = () => {
   const [showForm, setShowForm] = useState(false);
@@ -260,9 +262,7 @@ const Products = () => {
             </button>
           </div>
 
-          <div className="products-grid">
-            <Allproduct></Allproduct>
-          </div>
+          <Allproduct />
 
           {showForm && (
             <div
