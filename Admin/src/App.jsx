@@ -8,6 +8,7 @@ import LoadingAnimation from "./components/LoadingAnimation";
 import { useDispatch, useSelector } from "react-redux";
 import { Fectchdata } from "./Redux/CartSlice";
 import { fectchdata } from "./Redux/Reviews";
+import { contactdata } from "./Redux/Contactus";
 import { useEffect } from "react";
 
 function App() {
@@ -23,17 +24,23 @@ function App() {
     error: reviewError
   } = useSelector((state) => state.reviews);
 
+  const {
+     loading : contactusLoading,
+     error : contactusError
+  } = useSelector((state) => state.contactus);
+
   useEffect(() => {
     dispatch(Fectchdata());
     dispatch(fectchdata());
+    dispatch(contactdata());
   }, [dispatch]);
 
 
-  if (cartLoading || reviewLoading) {
+  if (cartLoading || reviewLoading || contactusLoading) {
     return <LoadingAnimation />;
   }
 
-  if (cartError || reviewError) {
+  if (cartError || reviewError || contactusError) {
     return (
       <div className="error-container">
         <h2>Error Loading Data</h2>
