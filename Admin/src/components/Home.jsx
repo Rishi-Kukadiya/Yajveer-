@@ -3,6 +3,7 @@ import { Link, Routes, Route } from 'react-router-dom'
 import { FiHome, FiUsers, FiBox, FiMessageSquare, FiSettings, FiMenu, FiX } from 'react-icons/fi'
 import { HiOutlineDocumentReport, HiOutlineCash } from 'react-icons/hi'
 import Products from './Products'
+import Reviews from "./Reviews";
 import '../CSS/Home.css'
 
 function Home() {
@@ -90,7 +91,7 @@ function Home() {
           <Route path="/products/*" element={<Products />} />
           <Route path="/users" element={<div>Users Page (Coming Soon)</div>} />
           <Route path="/orders" element={<div>Orders Page (Coming Soon)</div>} />
-          <Route path="/reviews" element={<div>Reviews Page (Coming Soon)</div>} />
+          <Route path="/reviews" element={<Reviews></Reviews>} />
           <Route path="/reports" element={<div>Reports Page (Coming Soon)</div>} />
           <Route path="/settings" element={<div>Settings Page (Coming Soon)</div>} />
         </Routes>

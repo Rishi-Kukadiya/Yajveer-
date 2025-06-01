@@ -2,9 +2,6 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/Apierror.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { User } from "../models/user.model.js";
-import { otp } from "../models/otp.model.js";
-import { sendOtpMail } from "../utils/mail.js";
-
 
 const generateAccessAndRefreshTokens = async (userId) => {
   try {

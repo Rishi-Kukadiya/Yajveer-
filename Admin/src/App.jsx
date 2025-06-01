@@ -7,26 +7,45 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import LoadingAnimation from "./components/LoadingAnimation";
 import { useDispatch, useSelector } from "react-redux";
 import { Fectchdata } from "./Redux/CartSlice";
+import { fectchdata } from "./Redux/Reviews";
 import { useEffect } from "react";
 
 function App() {
   const dispatch = useDispatch();
-  const { loading, data, error } = useSelector((state) => state.cart);
+  
+  const {
+    loading: cartLoading,
+    error: cartError
+  } = useSelector((state) => state.cart);
+
+  const {
+    loading: reviewLoading,
+    error: reviewError
+  } = useSelector((state) => state.reviews);
 
   useEffect(() => {
     dispatch(Fectchdata());
-  }, []);
+    dispatch(fectchdata());
+  }, [dispatch]);
 
-  if (loading) {
+
+  if (cartLoading || reviewLoading) {
     return <LoadingAnimation />;
   }
 
-  if (error) {
+  if (cartError || reviewError) {
     return (
       <div className="error-container">
         <h2>Error Loading Data</h2>
-        <p>{error}</p>
-        <button onClick={() => dispatch(Fectchdata())}>Retry</button>
+        <p>{cartError || reviewError}</p>
+        <button
+          onClick={() => {
+            dispatch(Fectchdata());
+            dispatch(fectchdata());
+          }}
+        >
+          Retry
+        </button>
       </div>
     );
   }
