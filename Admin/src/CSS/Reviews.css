@@ -2,92 +2,104 @@ body {
   font-family: "Georgia", "Times New Roman", serif;
 }
 
-
 .reviews-container-vertical {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr); /* exactly 3 per row */
-  gap: 2rem;
-  padding: 2rem;
-  justify-items: center; /* center cards in each column */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 24px;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
+/* Each review card */
 .review-card-vertical {
-    width: 90%; 
-    max-width: 500px; 
-    background-color: #fff;
-    border-radius: 16px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    padding: 1.5rem 1rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    transition: transform 0.3s ease;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  width: calc(33.33% - 32px); /* 3 in a row */
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.3s ease;
 }
-
 
 .review-card-vertical:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+  transform: translateY(-5px);
 }
 
+/* Profile photo: circular */
 .user-photo-vertical {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid #ddd;
-    margin-bottom: 1rem;
+  width: 90px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-bottom: 12px;
 }
 
 .user-name {
-    font-size: 1.2rem;
-    font-weight: bold;
-    margin: 0.5rem 0;
-    color: #222;
-    font-family: 'Times New Roman', Times, serif;
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin: 4px 0;
+  color: #28a745;
+  text-align: center;
 }
 
 .stars {
-    font-size: 1.1rem;
-    margin: 0.5rem 0;
-}
-
-.stars span {
-    margin: 0 3px;
-    color: #ccc;
-}
-
-.stars .filled {
-    color: #f5b301;
+  color: #ffb400;
+  font-size: 1.1rem;
+  margin: 6px 0;
 }
 
 .review-text {
-    font-size: 1.05rem;
-    font-style: italic;
-    color: #444;
-    margin: 1rem 0;
-    line-height: 1.6;
+  font-size: 0.95rem;
+  color: #333;
+  text-align: center;
+  margin: 10px 0;
+  line-height: 1.5;
 }
 
 .review-date {
-    font-size: 0.85rem;
-    color: #777;
-    font-style: italic;
+  font-size: 0.8rem;
+  color: #888;
+  margin-bottom: 10px;
 }
 
 .delete-button {
-  margin-top: 1rem;
-  padding: 0.4rem 1rem;
-  background-color: #ff4d4f;
+  padding: 8px 14px;
+  background-color: #ff4d4d;
   color: white;
   border: none;
   border-radius: 6px;
-  font-size: 0.9rem;
   cursor: pointer;
+  font-size: 0.9rem;
   transition: background-color 0.3s ease;
 }
 
 .delete-button:hover {
-  background-color: #d9363e;
+  background-color: #cc0000;
+}
+
+/* Medium screen (2 per row) */
+@media (max-width: 992px) {
+  .review-card-vertical {
+    width: calc(50% - 24px);
+  }
+}
+
+/* Small screen (1 per row) */
+@media (max-width: 600px) {
+  .review-card-vertical {
+    width: 100%;
+  }
+
+  .user-photo-vertical {
+    width: 75px;
+    height: 75px;
+  }
+
+  .delete-button {
+    width: 100%;
+  }
 }
