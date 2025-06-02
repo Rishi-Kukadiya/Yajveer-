@@ -4,7 +4,7 @@ import { FiHome, FiUsers, FiBox, FiMessageSquare, FiSettings, FiMenu, FiX ,  FiS
 import { HiOutlineDocumentReport, HiOutlineCash } from 'react-icons/hi'
 import Contactus from './Contactus'
 import Products from './Products';
-import ProductDetails from "./ProductDetails";
+import ProductDetails from "./Productdetails";
 import Reviews from "./Reviews";
 import '../CSS/Home.css'
 
@@ -108,4 +108,4 @@ function Home() {
   )
 }
 
-export default Home
+export default Home;
