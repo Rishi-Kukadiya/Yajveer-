@@ -165,14 +165,26 @@ export default function ProductDetails() {
   const parsedIngredients = Array.isArray(product.ingredients)
     ? product.ingredients
     : product.ingredients
-    ? JSON.parse(product.ingredients)
-    : [];
+      ? JSON.parse(product.ingredients)
+      : [];
 
   const parsedBenefits = Array.isArray(product.benefits)
     ? product.benefits
     : product.benefits
-    ? JSON.parse(product.benefits)
-    : [];
+      ? JSON.parse(product.benefits)
+      : [];
+  const parseArrayField = (field) => {
+    if (!field) return [];
+    if (Array.isArray(field)) return field;
+    try {
+      const parsed = JSON.parse(field);
+      return Array.isArray(parsed) ? parsed : [parsed.toString()];
+    } catch (e) {
+      return [field.toString()]; // Fallback if not JSON
+    }
+  };
+  const ingredientsList = parseArrayField(product.ingredients);
+  const benefitsList = parseArrayField(product.benefits);
 
   return (
     <>
@@ -248,9 +260,8 @@ export default function ProductDetails() {
                   {product.photos.map((_, index) => (
                     <button
                       key={index}
-                      className={`thumbnail-indicator ${
-                        index === currentImageIndex ? "active" : ""
-                      }`}
+                      className={`thumbnail-indicator ${index === currentImageIndex ? "active" : ""
+                        }`}
                       onClick={() => setCurrentImageIndex(index)}
                       aria-label={`View image ${index + 1}`}
                     />
@@ -316,7 +327,7 @@ export default function ProductDetails() {
             </div>
 
             {/* Ingredients Row */}
-            <div className="content-row section-box">
+            {/* <div className="content-row section-box">
               <h3>
                 <FaLeaf className="icon" /> Ingredients
               </h3>
@@ -332,10 +343,20 @@ export default function ProductDetails() {
                   <p>No ingredients listed.</p>
                 )}
               </div>
-            </div>
+            </div> */}
+            {ingredientsList.length > 0 && (
+              <div className="list-section-detailed">
+                <h3>Ingredients</h3>
+                <ul>
+                  {JSON.parse(product.ingredients).map((benefit, i) => (
+                    <li key={i}>{benefit}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
 
             {/* Benefits Row */}
-            <div className="content-row section-box">
+            {/* <div className="content-row section-box">
               <h3>
                 <FaLeaf className="icon" /> Benefits
               </h3>
@@ -351,7 +372,17 @@ export default function ProductDetails() {
                   <p>No benefits listed.</p>
                 )}
               </div>
-            </div>
+            </div> */}
+            {benefitsList.length > 0 && (
+              <div className="list-section-detailed">
+                <h3>Benefits</h3>
+                <ul>
+                  {JSON.parse(product.benefits).map((benefit, i) => (
+                    <li key={i}>{benefit}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
         </div>
       </div>
