@@ -1,6 +1,10 @@
 import "../CSS/navabar2.css";
 import Logo from "../assets/yajveer-logo.jpg";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router";
 export default function Navbar2() {
+  const dispatch = useDispatch();
+  const { data: products, loading, error } = useSelector((state) => state.cart);
   return (
     <>
       <nav className="Navbar2">
@@ -20,8 +24,17 @@ export default function Navbar2() {
                 </p>
               </div>
               <div className="Menulist">
-                <p>Herbal Powder</p>
-                <p>Karela powder</p>
+                {products &&
+                  products.map((item) => (
+                    <p key={item._id}>
+                      <Link
+                        to={`/product/${item._id}`}
+                        style={{ textDecoration: "none", color: "inherit" }}
+                      >
+                        {item.productName}
+                      </Link>
+                    </p>
+                  ))}
               </div>
             </div>
             <div className="content">

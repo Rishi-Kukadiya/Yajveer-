@@ -325,25 +325,6 @@ export default function ProductDetails() {
               <h3>Description</h3>
               <p className="horizontal-description">{product.description}</p>
             </div>
-
-            {/* Ingredients Row */}
-            {/* <div className="content-row section-box">
-              <h3>
-                <FaLeaf className="icon" /> Ingredients
-              </h3>
-              <div className="horizontal-list">
-                {parsedIngredients.length > 0 ? (
-                  parsedIngredients.map((ingredient, index) => (
-                    <div key={index} className="horizontal-point">
-                      <span className="bullet-point">•</span>
-                      <span>{ingredient.replace(/["[\]]/g, "")}</span>
-                    </div>
-                  ))
-                ) : (
-                  <p>No ingredients listed.</p>
-                )}
-              </div>
-            </div> */}
             {ingredientsList.length > 0 && (
               <div className="list-section-detailed">
                 <h3>Ingredients</h3>
@@ -355,24 +336,6 @@ export default function ProductDetails() {
               </div>
             )}
 
-            {/* Benefits Row */}
-            {/* <div className="content-row section-box">
-              <h3>
-                <FaLeaf className="icon" /> Benefits
-              </h3>
-              <div className="horizontal-list">
-                {parsedBenefits.length > 0 ? (
-                  parsedBenefits.map((benefit, index) => (
-                    <div key={index} className="horizontal-point">
-                      <span className="bullet-point">•</span>
-                      <span>{benefit.replace(/["[\]]/g, "")}</span>
-                    </div>
-                  ))
-                ) : (
-                  <p>No benefits listed.</p>
-                )}
-              </div>
-            </div> */}
             {benefitsList.length > 0 && (
               <div className="list-section-detailed">
                 <h3>Benefits</h3>
