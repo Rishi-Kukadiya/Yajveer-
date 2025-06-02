@@ -1,14 +1,19 @@
 import "../CSS/navabar2.css";
 import Logo from "../assets/yajveer-logo.jpg";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Link } from "react-router";
+import { useNavigate } from "react-router";
 export default function Navbar2() {
-  const dispatch = useDispatch();
-  const { data: products, loading, error } = useSelector((state) => state.cart);
+  const navigate = useNavigate();
+  const handleClick = () => {
+    navigate('/');  
+  };
+
+  const { data: products } = useSelector((state) => state.cart);
   return (
     <>
       <nav className="Navbar2">
-        <div className="logo">
+        <div className="logo" onClick={handleClick} style={{ cursor: 'pointer' }}>
           <img src={Logo} alt="Yajveer" />
         </div>
         <div className="search">

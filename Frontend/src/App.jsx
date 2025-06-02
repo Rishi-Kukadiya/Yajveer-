@@ -18,28 +18,43 @@ import TermsAndConditions from "./components/TermsConditions";
 import ShippingPolicy from "./components/ShippingPolices";
 import LoadingAnimation from "./components/LoadingAnimation";
 import { Fectchdata } from "./Redux/CartSlice";
+import { fectchdata } from "./Redux/Reviews";
 import Forgotpassword from "./components/Forgotpass";
 import Forgotpassword1 from "./components/Forgotpass1";
 import Forgotpassword2 from "./components/Forgotpass2";
 
 const App = () => {
   const dispatch = useDispatch();
-  const { loading, data, error } = useSelector((state) => state.cart);
+  const { loading: cartLoading, error: cartError } = useSelector(
+    (state) => state.cart
+  );
+
+  const { loading: reviewLoading, error: reviewError } = useSelector(
+    (state) => state.reviews
+  );
 
   useEffect(() => {
     dispatch(Fectchdata());
-  }, []);
+    dispatch(fectchdata());
+  }, [dispatch]);
 
-  if (loading) {
+  if (cartLoading || reviewLoading) {
     return <LoadingAnimation />;
   }
 
-  if (error) {
+  if (cartError || reviewError) {
     return (
       <div className="error-container">
         <h2>Error Loading Data</h2>
-        <p>{error}</p>
-        <button onClick={() => dispatch(Fectchdata())}>Retry</button>
+        <p>{cartError || reviewError}</p>
+        <button
+          onClick={() => {
+            dispatch(Fectchdata());
+            dispatch(fectchdata());
+          }}
+        >
+          Retry
+        </button>
       </div>
     );
   }
@@ -75,9 +90,18 @@ const App = () => {
           path="/shipping"
           element={<ShippingPolicy></ShippingPolicy>}
         ></Route>
-        <Route path="/forgotpassword" element={<Forgotpassword></Forgotpassword>}></Route>
-        <Route path="/forgotpassword1" element={<Forgotpassword1></Forgotpassword1>}></Route>
-        <Route path="/forgotpassword2" element={<Forgotpassword2></Forgotpassword2>}></Route>
+        <Route
+          path="/forgotpassword"
+          element={<Forgotpassword></Forgotpassword>}
+        ></Route>
+        <Route
+          path="/forgotpassword1"
+          element={<Forgotpassword1></Forgotpassword1>}
+        ></Route>
+        <Route
+          path="/forgotpassword2"
+          element={<Forgotpassword2></Forgotpassword2>}
+        ></Route>
       </Routes>
     </>
   );

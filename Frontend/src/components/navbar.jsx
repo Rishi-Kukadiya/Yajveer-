@@ -58,7 +58,7 @@ export default function Navbar() {
               </Link>
               <p>Free Delivery</p>
               <Link to="/returnpolicy">
-              <p>Returns Policy</p>
+                <p>Returns Policy</p>
               </Link>
             </div>
             <div className="navbar-right">
@@ -66,7 +66,9 @@ export default function Navbar() {
                 <p>Help Center</p>
                 <ul className="dropdown-menu">
                   <li>
-                    <i className="bi bi-headset"></i> Call Center
+                    <Link to="tel:+917405430230">
+                      <i className="bi bi-headset"></i> Call Center
+                    </Link>
                   </li>
                   <li>
                     <i className="bi bi-chat-dots"></i> Live Chat
