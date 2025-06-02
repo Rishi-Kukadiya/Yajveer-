@@ -7,7 +7,7 @@ import '../CSS/ProductDetails.css'; // We'll create this CSS file
 import LoadingAnimation from './LoadingAnimation';
 import { FiArrowLeft, FiTrash2, FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 
-const ProductDetails = () => {
+const Detail = () => {
     const { id } = useParams();
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -223,4 +223,4 @@ const ProductDetails = () => {
     );
 };
 
-export default ProductDetails;
+export default Detail;

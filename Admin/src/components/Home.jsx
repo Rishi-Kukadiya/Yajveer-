@@ -4,7 +4,7 @@ import { FiHome, FiUsers, FiBox, FiMessageSquare, FiSettings, FiMenu, FiX ,  FiS
 import { HiOutlineDocumentReport, HiOutlineCash } from 'react-icons/hi'
 import Contactus from './Contactus'
 import Products from './Products';
-import ProductDetails from "./Productdetails";
+import Detail from './Detail'
 import Reviews from "./Reviews";
 import '../CSS/Home.css'
 
@@ -95,7 +95,7 @@ function Home() {
             </>
           } />
           <Route path="/products/*" element={<Products />} />
-          <Route path="/products/:id" element={<ProductDetails />} />
+          <Route path="/products/:id" element={<Detail />} />
           <Route path="/users" element={<div>Users Page (Coming Soon)</div>} />
           <Route path="/orders" element={<div>Orders Page (Coming Soon)</div>} />
           <Route path="/query" element={<Contactus></Contactus>} />

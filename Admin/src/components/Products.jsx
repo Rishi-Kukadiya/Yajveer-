@@ -7,7 +7,7 @@ import LoadingAnimation from "./LoadingAnimation";
 import axios from "axios";
 import Allproduct from "./Allproduct";
 import { Routes, Route } from 'react-router-dom'; // Import Routes and Route
-import ProductDetails from "./Productdetails";
+import ProductDetails from "./Detail";
 
 const Products = () => {
   const [showForm, setShowForm] = useState(false);
