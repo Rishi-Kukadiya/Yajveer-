@@ -7,7 +7,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import LoadingAnimation from "./components/LoadingAnimation";
 import { useDispatch, useSelector } from "react-redux";
 import { Fectchdata } from "./Redux/CartSlice";
-import { fectchdata } from "./Redux/Reviews";
+import { fectchdata } from "./Redux/Review";
 import { contactdata } from "./Redux/Contactus";
 import { useEffect } from "react";
 
