@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Fectchdata } from "./Redux/CartSlice";
 import { fectchdata } from "./Redux/Review";
 import { contactdata } from "./Redux/Contactus";
+import { fectchuserdata } from "./Redux/User";
 import { useEffect } from "react";
 
 function App() {
@@ -29,18 +30,25 @@ function App() {
      error : contactusError
   } = useSelector((state) => state.contactus);
 
+
+  const {
+     loading : userLoading,
+     error : userError
+  } = useSelector((state) => state.users);
+
   useEffect(() => {
     dispatch(Fectchdata());
     dispatch(fectchdata());
     dispatch(contactdata());
+    dispatch(fectchuserdata());
   }, [dispatch]);
 
 
-  if (cartLoading || reviewLoading || contactusLoading) {
+  if (cartLoading || reviewLoading || contactusLoading || userLoading) {
     return <LoadingAnimation />;
   }
 
-  if (cartError || reviewError || contactusError) {
+  if (cartError || reviewError || contactusError || userError) {
     return (
       <div className="error-container">
         <h2>Error Loading Data</h2>

@@ -6,7 +6,6 @@ import LoadingAnimation from "./LoadingAnimation";
 
 const Allproduct = () => {
   const { data: products, loading, error } = useSelector((state) => state.cart); // Assuming 'cart' slice holds products
-  console.log(products);
   const calculateDiscountedPrice = (actualPrice, discount) => {
     return Math.round(actualPrice - (actualPrice * discount) / 100);
   };
