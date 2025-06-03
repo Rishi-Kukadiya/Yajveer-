@@ -24,6 +24,7 @@ import Forgotpassword1 from "./components/Forgotpass1";
 import Forgotpassword2 from "./components/Forgotpass2";
 import Testimonial from "./components/Testimonial";
 import Blog from "./components/Blog";
+import BlogDetail from "./components/BlogDetail";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -104,8 +105,12 @@ const App = () => {
           path="/forgotpassword2"
           element={<Forgotpassword2></Forgotpassword2>}
         ></Route>
-        <Route path="/Testimonial" element={<Testimonial></Testimonial>}></Route>
-        <Route path="/blog" element={<Blog></Blog>}></Route>
+        <Route
+          path="/Testimonial"
+          element={<Testimonial></Testimonial>}
+        ></Route>
+        <Route path="/blog" element={<Blog />} />
+        <Route path="/blog/:id" element={<BlogDetail />} />
       </Routes>
     </>
   );
