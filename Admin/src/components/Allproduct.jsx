@@ -1,8 +1,8 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import "../CSS/Allproduct.css"; // We'll create this CSS file
-import LoadingAnimation from "./LoadingAnimation"; // Assuming you have this
+import "../CSS/Allproduct.css"; 
+import LoadingAnimation from "./LoadingAnimation"; 
 
 const Allproduct = () => {
   const { data: products, loading, error } = useSelector((state) => state.cart); // Assuming 'cart' slice holds products
