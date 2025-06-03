@@ -1,0 +1,24 @@
+import "../CSS/Blog.css";
+import Navbar from "./navbar";
+import Navbar2 from "./navbar2";
+import MainNav from "./mainnav";
+import Footer from "./Footer/Footer";
+import Sidebar1 from "./Home/sidebar1";
+import Sidebar from "./Home/sidebar";
+import { useState } from "react";
+
+export default function Blog() {
+  const [isSidebarOpen, setSidebarOpen] = useState(false);
+  const handleOpenSidebar = () => setSidebarOpen(true);
+  const handleCloseSidebar = () => setSidebarOpen(false);
+  return (
+    <>
+      {isSidebarOpen && <Sidebar1 onClose={handleCloseSidebar} />}
+      <Sidebar onOpenSidebar={handleOpenSidebar} />
+      <Navbar></Navbar>
+      <Navbar2></Navbar2>
+      <MainNav></MainNav>
+      <Footer></Footer>
+    </>
+  );
+}

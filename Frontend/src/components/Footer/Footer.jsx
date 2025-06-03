@@ -40,7 +40,7 @@ export default function Footer() {
             </li>
             <li>
               <i className="bi bi-star"></i>
-              <Link to="/testimonials">Testimonials</Link>
+              <Link to="/Testimonial">Testimonials</Link>
             </li>
             <li>
               <i className="bi bi-box-seam"></i>

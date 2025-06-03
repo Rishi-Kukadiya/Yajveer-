@@ -22,6 +22,8 @@ import { fectchdata } from "./Redux/Reviews";
 import Forgotpassword from "./components/Forgotpass";
 import Forgotpassword1 from "./components/Forgotpass1";
 import Forgotpassword2 from "./components/Forgotpass2";
+import Testimonial from "./components/Testimonial";
+import Blog from "./components/Blog";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -102,6 +104,8 @@ const App = () => {
           path="/forgotpassword2"
           element={<Forgotpassword2></Forgotpassword2>}
         ></Route>
+        <Route path="/Testimonial" element={<Testimonial></Testimonial>}></Route>
+        <Route path="/blog" element={<Blog></Blog>}></Route>
       </Routes>
     </>
   );
