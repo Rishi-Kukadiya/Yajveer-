@@ -1,3 +1,13 @@
+.testimonial-heading {
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #1a7f2c;
+  margin-top: 20px;
+  margin-bottom: 16px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
 .reviews-container-vertical {
   display: flex;
   flex-wrap: wrap;
