@@ -16,12 +16,21 @@ export default function sidebar({ onOpenSidebar }) {
             <i className="bi bi-list"></i>
           </div>
         </div>
-        <div className="mn1lo"  onClick={handleClick} style={{ cursor: 'pointer' }}>
+        <div
+          className="mn1lo"
+          onClick={handleClick}
+          style={{ cursor: "pointer" }}
+        >
           <img src={Logo} alt="Logo" />
           <p style={{ fontFamily: "Constantia" }}>Yajveer Ayurvedic</p>
         </div>
         <div className="mnadd">
-          <Link>
+          {/* <Link>
+            <div className="mn1like">
+              <i className="bi bi-cart-plus"></i>
+            </div>
+          </Link> */}
+          <Link to="/cart">
             <div className="mn1like">
               <i className="bi bi-cart-plus"></i>
             </div>

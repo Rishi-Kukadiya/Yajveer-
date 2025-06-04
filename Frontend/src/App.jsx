@@ -25,6 +25,8 @@ import Forgotpassword2 from "./components/Forgotpass2";
 import Testimonial from "./components/Testimonial";
 import Blog from "./components/Blog";
 import BlogDetail from "./components/BlogDetail";
+import Cart from "./components/Cart";
+import { Toaster } from "react-hot-toast";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -64,6 +66,16 @@ const App = () => {
 
   return (
     <>
+      <Toaster
+        position="top-right"
+        toastOptions={{
+          duration: 2000,
+          style: {
+            background: "#333",
+            color: "#fff",
+          },
+        }}
+      />
       <ScrollToTop />
       <Routes>
         <Route path="/" element={<Home></Home>}></Route>
@@ -111,6 +123,7 @@ const App = () => {
         ></Route>
         <Route path="/blog" element={<Blog />} />
         <Route path="/blog/:id" element={<BlogDetail />} />
+        <Route path="/cart" element={<Cart />}></Route>
       </Routes>
     </>
   );

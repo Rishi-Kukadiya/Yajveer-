@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
-import { Fectchdata } from "../Redux/CartSlice.js";
+import { Fectchdata, addToCart } from "../Redux/CartSlice.js";
+import { toast } from 'react-hot-toast';
 import Navbar from "./navbar";
 import Navbar2 from "./navbar2";
 import MainNav from "./mainnav";
@@ -9,7 +10,7 @@ import Sidebar from "./Home/sidebar";
 import Sidebar1 from "./Home/sidebar1";
 import Footer from "./Footer/Footer";
 import "../CSS/ProductDetails.css";
-import { FaLeaf } from "react-icons/fa"; // Import the leaf icon
+
 
 export default function ProductDetails() {
   const { id } = useParams();
@@ -19,7 +20,7 @@ export default function ProductDetails() {
   const [selectedQuantities, setSelectedQuantities] = useState({});
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-  // Updated weight and price structure
+  
   const typeBasedOptions = {
     box: {
       weights: ["75g", "100g", "250g"],
@@ -37,7 +38,6 @@ export default function ProductDetails() {
       },
     },
   };
-
   useEffect(() => {
     if (!products || products.length === 0) {
       dispatch(Fectchdata());
@@ -118,20 +118,28 @@ export default function ProductDetails() {
       reset[weight] = 0;
     });
     setSelectedQuantities(reset);
-  };
-
-  const handleAddToCart = () => {
+  };  const handleAddToCart = () => {
     const { items, totalQuantity } = getSelectedItems();
 
     if (items.length === 0) {
-      alert(
-        "Please select at least one quantity for a weight variant to add to cart."
-      );
+      toast.error("Please select at least one quantity for a weight variant to add to cart.");
       return;
     }
 
-    console.log("Adding to cart:", items);
-    alert(`Added ${totalQuantity} item(s) to cart!`);
+    items.forEach(item => {
+      dispatch(addToCart({ 
+        item: {
+          _id: item._id,
+          productName: item.productName,
+          selectedWeight: item.selectedWeight,
+          price: item.price,
+          image: item.image
+        }, 
+        quantity: item.quantity 
+      }));
+    });
+    
+    toast.success(`Added ${totalQuantity} item(s) to cart!`);
     resetSelectedQuantities();
   };
 
@@ -161,18 +169,7 @@ export default function ProductDetails() {
   const typeOptions = typeBasedOptions[product.type] || {};
   const availableWeights = typeOptions.weights || [];
 
-  // Parse ingredients and benefits
-  const parsedIngredients = Array.isArray(product.ingredients)
-    ? product.ingredients
-    : product.ingredients
-      ? JSON.parse(product.ingredients)
-      : [];
-
-  const parsedBenefits = Array.isArray(product.benefits)
-    ? product.benefits
-    : product.benefits
-      ? JSON.parse(product.benefits)
-      : [];
+  
   const parseArrayField = (field) => {
     if (!field) return [];
     if (Array.isArray(field)) return field;
@@ -325,6 +322,8 @@ export default function ProductDetails() {
               <h3>Description</h3>
               <p className="horizontal-description">{product.description}</p>
             </div>
+
+          
             {ingredientsList.length > 0 && (
               <div className="list-section-detailed">
                 <h3>Ingredients</h3>
@@ -336,6 +335,7 @@ export default function ProductDetails() {
               </div>
             )}
 
+           
             {benefitsList.length > 0 && (
               <div className="list-section-detailed">
                 <h3>Benefits</h3>
