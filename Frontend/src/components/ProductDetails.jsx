@@ -104,7 +104,7 @@ export default function ProductDetails() {
           selectedWeight: weight,
           quantity: qty,
           price: itemPrice,
-          image: product.photos?.[currentImageIndex] || "",
+          image: product.photos?.[0] || "",
         });
         totalQty += qty;
       }
@@ -165,7 +165,7 @@ export default function ProductDetails() {
   if (!product)
     return <div className="product-not-found">Product not found.</div>;
 
-  // Get weights and prices based on product type
+  
   const typeOptions = typeBasedOptions[product.type] || {};
   const availableWeights = typeOptions.weights || [];
 
