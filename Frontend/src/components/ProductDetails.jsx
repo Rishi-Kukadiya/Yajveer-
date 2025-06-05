@@ -150,6 +150,11 @@ export default function ProductDetails() {
   };
 
   const handleBuyNow = () => {
+    const { items, totalQuantity } = getSelectedItems();
+    if (items.length === 0) {
+      toast.error("Please select at least one quantity for a weight variant to add to cart.");
+      return ;
+    }
     handleAddToCart();
     navigate("/cart", { replace: true });
   };

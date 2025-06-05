@@ -1,33 +1,60 @@
+import React, { useState } from "react"; 
 import "../CSS/navabar2.css";
 import Logo from "../assets/yajveer-logo.jpg";
 import { useSelector } from "react-redux";
 import { selectCartItemsCount } from "../Redux/CartSlice";
-import { Link } from "react-router";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router"; 
+import Fuse from "fuse.js"; 
+
 export default function Navbar2() {
   const navigate = useNavigate();
-  const handleClick = () => {
-    navigate("/");
-  };
+  const [query, setQuery] = useState(""); 
 
   const { data: products } = useSelector((state) => state.cart);
   const cartItemsCount = useSelector(selectCartItemsCount);
+
+
+  const handleSearch = () => {
+    if (!query.trim()) return; 
+
+    const fuse = new Fuse(products, {
+      keys: ["productName"],
+      threshold: 5, // smaller → stricter match
+    });
+
+    // 2. run the search – returns ranked list
+    const result = fuse.search(query.trim());
+
+    if (result.length) {
+      const { _id } = result[0].item;
+      navigate(`/product/${_id}`);
+    } else {
+      navigate("/404"); // or whatever your NotFound route is
+    }
+  };
+
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") handleSearch();
+  };
+
   return (
     <>
       <nav className="Navbar2">
         <div
           className="logo"
-          onClick={handleClick}
+          onClick={() => navigate("/")}
           style={{ cursor: "pointer" }}
         >
           <img src={Logo} alt="Yajveer" />
         </div>
+
         <div className="search">
           <div className="s1">
             <div className="list">
               <div className="title">
                 <p>
-                  All Categories{" "}
+                  All&nbsp;Categories{" "}
                   <i
                     className="bi bi-caret-down-fill"
                     style={{ fontSize: "1rem" }}
@@ -35,24 +62,36 @@ export default function Navbar2() {
                 </p>
               </div>
               <div className="Menulist">
-                {products &&
-                  products.map((item) => (
-                    <p key={item._id}>
-                      <Link
-                        to={`/product/${item._id}`}
-                        style={{ textDecoration: "none", color: "inherit" }}
-                      >
-                        {item.productName}
-                      </Link>
-                    </p>
-                  ))}
+                {products?.map((item) => (
+                  <p key={item._id}>
+                    <Link
+                      to={`/product/${item._id}`}
+                      style={{ textDecoration: "none", color: "inherit" }}
+                    >
+                      {item.productName}
+                    </Link>
+                  </p>
+                ))}
               </div>
             </div>
+
             <div className="content">
               <div className="input">
-                <input type="text" placeholder="Search For the Product" />
+                <input
+                  type="text"
+                  placeholder="Search for the product"
+                  value={query} 
+                  onChange={(e) => setQuery(e.target.value)} 
+                  onKeyDown={handleKeyDown} 
+                />
               </div>
-              <div className="s2">
+              <div
+                className="s2"
+                onClick={handleSearch} 
+                style={{ cursor: "pointer" }}
+              >
+                {" "}
+
                 <div className="con">
                   <i className="bi bi-search fs-1"></i>
                 </div>
@@ -66,10 +105,7 @@ export default function Navbar2() {
             <i className="bi bi-heart" style={{ color: "white" }}></i>
             <p>Wishlist</p>
           </div>
-          {/* <div className="add">
-            <i className="bi bi-cart-plus" style={{ color: "white" }}></i>
-            <p>Cart</p>
-          </div> */}
+
           <Link to="/cart" className="add">
             <div
               className="cart-icon-container"
