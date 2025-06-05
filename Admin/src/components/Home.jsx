@@ -18,21 +18,111 @@ import Reviews from "./Reviews";
 import Users from "./Users";
 import { useSelector } from "react-redux";
 import "../CSS/Home.css";
+import LineChart from "./LineChart";
 
+const mockLineData = [
+  {
+    id: 1,
+    title: "Users Growth",
+    data: [
+      { x: "Jan", y: 1000 },
+      { x: "Feb", y: 1250 },
+      { x: "Mar", y: 1100 },
+      { x: "Apr", y: 1400 },
+      { x: "May", y: 1300 },
+      { x: "Jun", y: 1800 },
+      { x: "Jul", y: 1600 },
+      { x: "Aug", y: 2100 },
+      { x: "Sep", y: 1900 },
+      { x: "Oct", y: 2300 },
+      { x: "Nov", y: 2100 },
+      { x: "Dec", y: 2500 },
+    ],
+  },
+  {
+    id: 2,
+    title: "Products Growth",
+    data: [
+      { x: "Jan", y: 20 },
+      { x: "Feb", y: 28 },
+      { x: "Mar", y: 25 },
+      { x: "Apr", y: 35 },
+      { x: "May", y: 32 },
+      { x: "Jun", y: 40 },
+      { x: "Jul", y: 38 },
+      { x: "Aug", y: 45 },
+      { x: "Sep", y: 42 },
+      { x: "Oct", y: 48 },
+      { x: "Nov", y: 44 },
+      { x: "Dec", y: 50 },
+    ],
+  },
+  {
+    id: 3,
+    title: "Orders Growth",
+    data: [
+      { x: "Jan", y: 500 },
+      { x: "Feb", y: 650 },
+      { x: "Mar", y: 580 },
+      { x: "Apr", y: 800 },
+      { x: "May", y: 750 },
+      { x: "Jun", y: 950 },
+      { x: "Jul", y: 850 },
+      { x: "Aug", y: 1100 },
+      { x: "Sep", y: 980 },
+      { x: "Oct", y: 1300 },
+      { x: "Nov", y: 1150 },
+      { x: "Dec", y: 1400 },
+    ],
+  },
+  {
+    id: 4,
+    title: "Reviews Growth",
+    data: [
+      { x: "Jan", y: 100 },
+      { x: "Feb", y: 180 },
+      { x: "Mar", y: 150 },
+      { x: "Apr", y: 280 },
+      { x: "May", y: 250 },
+      { x: "Jun", y: 380 },
+      { x: "Jul", y: 320 },
+      { x: "Aug", y: 480 },
+      { x: "Sep", y: 420 },
+      { x: "Oct", y: 580 },
+      { x: "Nov", y: 520 },
+      { x: "Dec", y: 650 },
+    ],
+  },
+];
 function Home() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const { data: user } = useSelector((state) => state.users);
-  const { data: products, loading, error } = useSelector((state) => state.cart);
+  const { data: products} = useSelector((state) => state.cart);
   const { data: reviews } = useSelector((state) => state.reviews);
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
   const metrics = [
-    { id: 1, title: "Total Users", value: `${user.totalUsers.length}`, icon: <FiUsers /> },
-    { id: 2, title: "Total Products", value: `${products.length}`, icon: <FiBox /> },
+    {
+      id: 1,
+      title: "Total Users",
+      value: `${user.totalUsers.length}`,
+      icon: <FiUsers />,
+    },
+    {
+      id: 2,
+      title: "Total Products",
+      value: `${products.length}`,
+      icon: <FiBox />,
+    },
     { id: 3, title: "Total Orders", value: "789", icon: <HiOutlineCash /> },
-    { id: 4, title: "Total Reviews", value: `${reviews.length}`, icon: <FiMessageSquare /> },
+    {
+      id: 4,
+      title: "Total Reviews",
+      value: `${reviews.length}`,
+      icon: <FiMessageSquare />,
+    },
   ];
 
   return (
@@ -121,9 +211,33 @@ function Home() {
                     </div>
                   ))}
                 </div>
+                <div
+                  className="charts-grid"
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "repeat(2, 1fr)",
+                    gap: "20px",
+                    padding: "20px",
+                    marginTop: "20px",
+                  }}
+                >
+                  <div className="chart-card">
+                    <LineChart data={mockLineData[0]} title="Users Growth" />
+                  </div>
+                  <div className="chart-card">
+                    <LineChart data={mockLineData[1]} title="Products Growth" />
+                  </div>
+                  <div className="chart-card">
+                    <LineChart data={mockLineData[2]} title="Orders Growth" />
+                  </div>
+                  <div className="chart-card">
+                    <LineChart data={mockLineData[3]} title="Reviews Growth" />
+                  </div>
+                </div>
               </>
             }
           />
+
           <Route path="/products/*" element={<Products />} />
           <Route path="/products/:id" element={<Detail />} />
           <Route path="/users" element={<Users></Users>} />
