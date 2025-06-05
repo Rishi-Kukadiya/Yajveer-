@@ -67,7 +67,7 @@ const Products = () => {
 
     // Validate file types and sizes
     const validTypes = ["image/jpeg", "image/png", "image/jpg", "image/webp"];
-    const maxSize = 5 * 1024 * 1024; // 5MB
+    const maxSize = 10 * 1024 * 1024; // 5MB
 
     const invalidFiles = files.filter(
       (file) => !validTypes.includes(file.type) || file.size > maxSize
