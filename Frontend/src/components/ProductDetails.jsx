@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
 import { Fectchdata, addToCart } from "../Redux/CartSlice.js";
-import { toast } from 'react-hot-toast';
+import { toast } from "react-hot-toast";
+import { useNavigate } from "react-router";
 import Navbar from "./navbar";
 import Navbar2 from "./navbar2";
 import MainNav from "./mainnav";
@@ -11,7 +12,6 @@ import Sidebar1 from "./Home/sidebar1";
 import Footer from "./Footer/Footer";
 import "../CSS/ProductDetails.css";
 
-
 export default function ProductDetails() {
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -19,8 +19,9 @@ export default function ProductDetails() {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [selectedQuantities, setSelectedQuantities] = useState({});
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const navigate = useNavigate();
 
-  
+
   const typeBasedOptions = {
     box: {
       weights: ["75g", "100g", "250g"],
@@ -118,44 +119,39 @@ export default function ProductDetails() {
       reset[weight] = 0;
     });
     setSelectedQuantities(reset);
-  };  const handleAddToCart = () => {
+  };
+  const handleAddToCart = () => {
     const { items, totalQuantity } = getSelectedItems();
 
     if (items.length === 0) {
-      toast.error("Please select at least one quantity for a weight variant to add to cart.");
+      toast.error(
+        "Please select at least one quantity for a weight variant to add to cart."
+      );
       return;
     }
 
-    items.forEach(item => {
-      dispatch(addToCart({ 
-        item: {
-          _id: item._id,
-          productName: item.productName,
-          selectedWeight: item.selectedWeight,
-          price: item.price,
-          image: item.image
-        }, 
-        quantity: item.quantity 
-      }));
+    items.forEach((item) => {
+      dispatch(
+        addToCart({
+          item: {
+            _id: item._id,
+            productName: item.productName,
+            selectedWeight: item.selectedWeight,
+            price: item.price,
+            image: item.image,
+          },
+          quantity: item.quantity,
+        })
+      );
     });
-    
+
     toast.success(`Added ${totalQuantity} item(s) to cart!`);
     resetSelectedQuantities();
   };
 
   const handleBuyNow = () => {
-    const { items, totalQuantity } = getSelectedItems();
-
-    if (items.length === 0) {
-      alert(
-        "Please select at least one quantity for a weight variant to buy now."
-      );
-      return;
-    }
-
-    console.log("Buying now:", items);
-    alert(`Proceeding to checkout with ${totalQuantity} item(s)!`);
-    resetSelectedQuantities();
+    handleAddToCart();
+    navigate("/cart", { replace: true });
   };
 
   if (loading)
@@ -165,11 +161,9 @@ export default function ProductDetails() {
   if (!product)
     return <div className="product-not-found">Product not found.</div>;
 
-  
   const typeOptions = typeBasedOptions[product.type] || {};
   const availableWeights = typeOptions.weights || [];
 
-  
   const parseArrayField = (field) => {
     if (!field) return [];
     if (Array.isArray(field)) return field;
@@ -257,8 +251,9 @@ export default function ProductDetails() {
                   {product.photos.map((_, index) => (
                     <button
                       key={index}
-                      className={`thumbnail-indicator ${index === currentImageIndex ? "active" : ""
-                        }`}
+                      className={`thumbnail-indicator ${
+                        index === currentImageIndex ? "active" : ""
+                      }`}
                       onClick={() => setCurrentImageIndex(index)}
                       aria-label={`View image ${index + 1}`}
                     />
@@ -284,11 +279,16 @@ export default function ProductDetails() {
                           <span className="variant-actual-price">₹{price}</span>
                         </div>
                         <div className="quantity-controls">
-                          <button onClick={() => handleQuantityChange(weight, -1)} disabled={selectedQuantities[weight] === 0}>
+                          <button
+                            onClick={() => handleQuantityChange(weight, -1)}
+                            disabled={selectedQuantities[weight] === 0}
+                          >
                             -
                           </button>
                           <span>{selectedQuantities[weight] || 0}</span>
-                          <button onClick={() => handleQuantityChange(weight, 1)}>
+                          <button
+                            onClick={() => handleQuantityChange(weight, 1)}
+                          >
                             +
                           </button>
                         </div>
@@ -320,7 +320,6 @@ export default function ProductDetails() {
               <p className="horizontal-description">{product.description}</p>
             </div>
 
-          
             {ingredientsList.length > 0 && (
               <div className="list-section-detailed">
                 <h3>Ingredients</h3>
@@ -332,7 +331,6 @@ export default function ProductDetails() {
               </div>
             )}
 
-           
             {benefitsList.length > 0 && (
               <div className="list-section-detailed">
                 <h3>Benefits</h3>
@@ -347,6 +345,7 @@ export default function ProductDetails() {
         </div>
       </div>
       <Footer />
-    </>
-  );
+          
+    </>
+  );
 }

@@ -129,7 +129,7 @@ export default function Cart() {
 
   const handleCloseCheckout = () => {
     setShowCheckoutForm(false);
-    document.body.style.overflow = "auto"; // Re-enable scrolling
+    document.body.style.overflow = "auto"; 
   };
 
   const closeModal = () => {

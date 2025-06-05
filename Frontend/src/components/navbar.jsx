@@ -52,13 +52,14 @@ export default function Navbar() {
         <>
           <nav className="navbar">
             <div className="navbar-left">
-              <p>Become A Seller</p>
               <Link to="/aboutUs">
                 <p>About Us</p>
               </Link>
-              <p>Free Delivery</p>
               <Link to="/returnpolicy">
                 <p>Returns Policy</p>
+              </Link>
+              <Link to="/faq">
+                  <p>FAQs</p>
               </Link>
             </div>
             <div className="navbar-right">
