@@ -27,6 +27,7 @@ import Blog from "./components/Blog";
 import BlogDetail from "./components/BlogDetail";
 import Cart from "./components/Cart";
 import { Toaster } from "react-hot-toast";
+import CheckoutForm from "./components/CheckoutForm";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -124,6 +125,7 @@ const App = () => {
         <Route path="/blog" element={<Blog />} />
         <Route path="/blog/:id" element={<BlogDetail />} />
         <Route path="/cart" element={<Cart />}></Route>
+        <Route path="/checkout" element={<CheckoutForm />}></Route>
       </Routes>
     </>
   );

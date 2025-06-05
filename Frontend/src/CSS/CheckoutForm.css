@@ -1,0 +1,234 @@
+.checkout-form-container {
+    position: relative; /* Add this */
+    max-width: 600px;
+    margin: 3rem auto;
+    padding: 2.5rem;
+    background: linear-gradient(to bottom right, #ffffff, #f8fafc);
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+.checkout-form-container h2 {
+    color: #1a1a1a;
+    margin-bottom: 2rem;
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+}
+
+.checkout-form {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    position: relative;
+}
+
+.form-group label {
+    font-weight: 600;
+    color: #374151;
+    font-size: 0.95rem;
+    transform: translateY(-5px);
+    transition: all 0.2s ease;
+}
+
+.form-group input,
+.form-group textarea {
+    padding: 1rem;
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+    background-color: #ffffff;
+}
+
+/* Update form input hover and focus states */
+.form-group input:hover,
+.form-group textarea:hover {
+    border-color: #22c55e;  /* Changed from blue to green */
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #22c55e;  /* Changed from blue to green */
+    box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1);  /* Changed to green with opacity */
+}
+
+.order-summary {
+    background: linear-gradient(145deg, #f8fafc, #ecfdf5);  /* Changed to light green tint */
+    padding: clamp(1rem, 3vw, 1.5rem);
+    border-radius: 12px;
+    margin: 1.5rem 0;
+    border: 1px solid #e5e7eb;
+}
+
+.order-summary h3 {
+    color: #1f2937;
+    margin-bottom: 1rem;
+    font-size: clamp(1rem, 2.5vw, 1.2rem);
+    font-weight: 700;
+}
+
+.total-amount {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: clamp(0.875rem, 2.5vw, 1.25rem);
+    font-weight: 700;
+    color: #1f2937;
+    padding-top: 0.5rem;
+    border-top: 2px solid #e5e7eb;
+}
+
+/* Update proceed payment button */
+.proceed-payment-btn {
+    background: linear-gradient(to right, #22c55e, #16a34a);  /* Changed from blue to green gradient */
+    color: white;
+    padding: 1.25rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+    box-shadow: 0 4px 6px rgba(34, 197, 94, 0.1);  /* Changed shadow color */
+}
+
+.proceed-payment-btn:hover {
+    background: linear-gradient(to right, #16a34a, #15803d);  /* Darker green gradient on hover */
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(34, 197, 94, 0.2);  /* Changed shadow color */
+}
+
+.back-to-cart-btn {
+    position: absolute;
+    right: 0;
+    top: 0;
+    background: #f8fafc;
+    color: #4b5563;
+    padding: 0.75rem 1.5rem;
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    z-index: 1;
+}
+
+.back-to-cart-btn:hover {
+    background: #f1f5f9;
+    color: #1f2937;
+    border-color: #d1d5db;
+}
+
+.error-message {
+    color: #ef4444;
+    font-size: 0.875rem;
+    margin-top: 0.375rem;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.form-group input.error,
+.form-group textarea.error {
+    border-color: #ef4444;
+    background-color: #fef2f2;
+    animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+.form-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 2rem;
+    padding: 0.5rem 1rem;
+}
+
+.form-header h2 {
+    margin: 0;
+    text-align: center;
+    font-size: clamp(1.2rem, 3vw, 1.8rem);
+}
+
+.close-form-btn {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    background: transparent;
+    border: none;
+    color: #4b5563;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    padding: 0;
+    z-index: 2;
+}
+
+.close-form-btn:hover {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+.close-form-btn svg {
+    width: 20px;
+    height: 20px;
+}
+
+@media (max-width: 768px) {
+    .checkout-form-container {
+        margin: 1rem;
+        padding: 2rem 1.5rem 1.5rem; /* Increase top padding for button */
+    }
+
+    .close-form-btn {
+        right: 0.75rem;
+        top: 0.75rem;
+        width: 28px;
+        height: 28px;
+    }
+
+    .close-form-btn svg {
+        width: 18px;
+        height: 18px;
+    }
+}
+
+@media (max-width: 480px) {
+    .order-summary {
+        padding: 0.875rem;
+    }
+
+    .total-amount {
+        flex-direction: row;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+    }
+
+    .total-amount span {
+        font-size: 1rem;
+    }
+}
