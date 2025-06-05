@@ -11,6 +11,7 @@ import { fectchdata } from "./Redux/Review";
 import { contactdata } from "./Redux/Contactus";
 import { fectchuserdata } from "./Redux/User";
 import { useEffect } from "react";
+import Notfound from "./components/Notfound";
 
 function App() {
   const dispatch = useDispatch();
@@ -77,6 +78,7 @@ function App() {
         }
       />
       <Route path="/forgotPassword" element={<ForgotPass />} />
+      <Route path="*" element={<Notfound></Notfound>}></Route>
     </Routes>
   );
 }

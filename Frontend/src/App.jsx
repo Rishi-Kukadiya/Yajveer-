@@ -28,6 +28,8 @@ import BlogDetail from "./components/BlogDetail";
 import Cart from "./components/Cart";
 import { Toaster } from "react-hot-toast";
 import CheckoutForm from "./components/CheckoutForm";
+import Notfound from "./components/Notfound";
+
 
 const App = () => {
   const dispatch = useDispatch();
@@ -126,6 +128,7 @@ const App = () => {
         <Route path="/blog/:id" element={<BlogDetail />} />
         <Route path="/cart" element={<Cart />}></Route>
         <Route path="/checkout" element={<CheckoutForm />}></Route>
+        <Route path="*" element={<Notfound></Notfound>}></Route>
       </Routes>
     </>
   );
