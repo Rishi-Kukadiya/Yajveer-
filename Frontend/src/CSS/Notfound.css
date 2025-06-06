@@ -1,354 +1,157 @@
-/* === Ultra Premium Ayurvedic 404 Page === */
 :root {
-  --gold: #d4af37;
-  --deep-green: #1a3a1e;
-  --light-green: #78a06a;
-  --cream: #f8f5f0;
-  --earth: #8b6b4a;
-  --shadow: 0 20px 50px rgba(26, 58, 30, 0.3);
+  --nf-green: #1a3a1e;
+  --nf-light-green: #78a06a;
+  --nf-gold: #d4af37;
+  --nf-bg: #f8f5f0;
+  --nf-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
 }
 
-/* Base Container with Gradient */
-.notfound-container {
+.nf-container {
   min-height: 100vh;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #f8f5f0 0%, #e8e0d0 100%);
-  color: var(--deep-green);
-  font-family: 'Cormorant Garamond', 'Times New Roman', serif;
+  background: linear-gradient(to bottom right, #f8f5f0, #eae4d8);
+  padding: 20px;
   position: relative;
   overflow: hidden;
-  padding: 20px;
-  text-align: center;
+  font-family: 'Playfair Display', serif;
 }
 
-/* Floating Herbal Background Elements */
-.floating-herbs {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  pointer-events: none;
-  z-index: 0;
-}
-
-.floating-herb {
-  position: absolute;
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path fill="%2378a06a" d="M50 10Q30 30 50 50t0 40q20-20 0-40T50 10z"/></svg>');
-  background-size: contain;
-  background-repeat: no-repeat;
-  width: var(--size);
-  height: var(--size);
-  opacity: var(--opacity);
-  animation: float var(--duration) infinite ease-in-out var(--delay);
-  left: var(--startX);
-  top: var(--startY);
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  50% { transform: translateY(-50px) rotate(5deg); }
-}
-
-/* Main Content Container */
-.notfound-content {
+.nf-content {
   position: relative;
+  background: white;
+  border-radius: 24px;
+  padding: 60px 40px;
+  text-align: center;
+  box-shadow: var(--nf-shadow);
+  max-width: 500px;
+  width: 100%;
+  border: 1px solid #eee;
   z-index: 2;
-  max-width: 800px;
-  padding: 60px;
-  background-color: rgba(255, 255, 255, 0.95);
-  border-radius: 30px;
-  box-shadow: var(--shadow);
-  margin: 20px;
-  border: 1px solid rgba(210, 180, 140, 0.3);
-  transform: translateY(20px);
-  opacity: 0;
-  transition: all 0.6s ease-out;
 }
 
-.notfound-content.animate {
-  transform: translateY(0);
-  opacity: 1;
-}
-
-/* Luxury Border Effect */
-.luxury-border {
+.nf-border {
   position: absolute;
   top: 10px;
   left: 10px;
   right: 10px;
   bottom: 10px;
-  border: 1px solid var(--gold);
+  border: 1px solid var(--nf-gold);
   border-radius: 20px;
   pointer-events: none;
-  opacity: 0.5;
 }
 
-/* Ayurvedic Symbol */
-.ayurvedic-symbol {
+.nf-symbol {
   position: absolute;
   top: -30px;
   left: 50%;
   transform: translateX(-50%);
-  width: 60px;
-  height: 60px;
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path fill="%23d4af37" d="M50 10A40 40 0 1 1 10 50 40 40 0 0 1 50 10zm0 10A30 30 0 1 0 80 50 30 30 0 0 0 50 20z"/><circle cx="50" cy="50" r="10" fill="%2378a06a"/></svg>');
-  background-size: contain;
-  background-repeat: no-repeat;
-  z-index: 3;
-}
-
-/* Error Display */
-.error-display {
-  position: relative;
-  margin-bottom: 30px;
-}
-
-.error-code {
-  font-size: 10rem;
-  margin: 0;
-  color: var(--deep-green);
-  font-weight: 700;
-  line-height: 1;
-  text-shadow: 3px 3px 0 rgba(120, 160, 106, 0.2);
-  letter-spacing: 2px;
-  font-family: 'Playfair Display', serif;
-}
-
-.error-divider {
-  width: 100px;
-  height: 3px;
-  background: linear-gradient(90deg, var(--gold), var(--light-green));
-  margin: 15px auto;
-  border-radius: 3px;
-}
-
-.error-title {
-  font-size: 2.5rem;
-  margin: 10px 0;
-  color: var(--deep-green);
-  font-weight: 600;
-  letter-spacing: 1px;
-  font-family: 'Cormorant Garamond', serif;
-}
-
-/* Error Message */
-.error-message {
-  font-size: 1.3rem;
-  line-height: 1.8;
-  max-width: 600px;
-  margin: 30px auto;
-  color: var(--deep-green);
-  position: relative;
-  padding: 0 20px;
-  transform: translateY(20px);
-  opacity: 0;
-  transition: all 0.6s ease-out 0.2s;
-}
-
-/* Home Button */
-.home-button {
-  display: inline-flex;
+  width: 50px;
+  height: 50px;
+  background: white;
+  border-radius: 50%;
+  border: 4px solid var(--nf-gold);
+  display: flex;
   align-items: center;
   justify-content: center;
-  padding: 18px 40px;
-  background: linear-gradient(135deg, var(--light-green) 0%, var(--deep-green) 100%);
-  color: white;
-  border-radius: 50px;
-  font-weight: 600;
-  font-size: 1.2rem;
-  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.nf-symbol::after {
+  content: '';
+  width: 12px;
+  height: 12px;
+  background-color: var(--nf-green);
+  border-radius: 50%;
+}
+
+.nf-error-box {
   margin-top: 20px;
+}
+
+.nf-code {
+  font-size: 6rem;
+  color: var(--nf-green);
+  margin: 0;
+  font-weight: 700;
+}
+
+.nf-divider {
+  width: 100px;
+  height: 3px;
+  background: linear-gradient(to right, var(--nf-gold), var(--nf-light-green));
+  border-radius: 2px;
+  margin: 20px auto;
+}
+
+.nf-title {
+  font-size: 1.8rem;
+  color: var(--nf-green);
+  margin: 10px 0 30px;
+}
+
+.nf-button {
+  background: linear-gradient(to right, var(--nf-light-green), var(--nf-green));
   border: none;
+  border-radius: 40px;
+  padding: 14px 28px;
+  color: white;
+  font-weight: 600;
+  font-size: 1.1rem;
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 10px 20px rgba(26, 58, 30, 0.2);
-  transform: translateY(20px);
-  opacity: 0;
-  transition: all 0.6s ease-out 0.6s;
 }
 
-.home-button.animate {
-  transform: translateY(0);
-  opacity: 1;
+.nf-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
 }
 
-.button-text {
-  position: relative;
-  z-index: 2;
-  letter-spacing: 0.5px;
-}
-
-.button-icon {
-  margin-left: 15px;
-  position: relative;
-  z-index: 2;
-  transition: transform 0.3s ease;
-}
-
-.button-icon svg {
+.nf-button-icon svg {
   width: 20px;
   height: 20px;
 }
 
-.button-hover-effect {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(135deg, var(--deep-green) 0%, var(--light-green) 100%);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  z-index: 1;
-}
-
-.home-button:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 15px 30px rgba(26, 58, 30, 0.3);
-}
-
-.home-button:hover .button-icon {
-  transform: translateX(5px);
-}
-
-.home-button:hover .button-hover-effect {
-  opacity: 1;
-}
-
-/* Luxury Footer */
-.luxury-footer {
-  margin-top: 60px;
-  color: var(--deep-green);
-  font-size: 0.9rem;
-  position: relative;
-  width: 100%;
-  padding-bottom: 30px;
-  transform: translateY(20px);
-  opacity: 0;
-  transition: all 0.6s ease-out 0.8s;
-}
-
-.luxury-footer.animate {
-  transform: translateY(0);
-  opacity: 1;
-}
-
-.footer-wave {
-  position: absolute;
-  top: -30px;
-  left: 0;
-  width: 100%;
-  height: 30px;
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none"><path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" fill="%235a7f5c"></path><path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5" fill="%235a7f5c"></path><path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" fill="%235a7f5c"></path></svg>');
-  background-size: cover;
-  background-repeat: no-repeat;
-}
-
-.footer-seal {
-  margin-top: 20px;
-}
-
-.luxury-footer p {
-  margin: 0;
-  letter-spacing: 0.5px;
-  position: relative;
-  z-index: 2;
-}
-
-/* Responsive Adjustments */
-@media (max-width: 992px) {
-  .notfound-content {
-    padding: 50px 30px;
-  }
-  
-  .error-code {
-    font-size: 8rem;
-  }
-  
-  .error-title {
-    font-size: 2rem;
-  }
-  
-  .wisdom-card {
-    padding: 25px 20px;
-  }
+.nf-floating-herbs {
+  display: none; /* Optional: remove or keep as decorative background */
 }
 
 @media (max-width: 768px) {
-  .notfound-content {
+  .nf-content {
     padding: 40px 25px;
-    margin: 15px;
   }
-  
-  .error-code {
-    font-size: 6rem;
+
+  .nf-code {
+    font-size: 4.5rem;
   }
-  
-  .error-title {
-    font-size: 1.8rem;
+
+  .nf-title {
+    font-size: 1.5rem;
   }
-  
-  .error-message {
-    font-size: 1.1rem;
-  }
-  
-  .home-button {
-    padding: 15px 30px;
-    font-size: 1.1rem;
-  }
-  
-  .floating-herb {
-    opacity: 0.2;
+
+  .nf-button {
+    font-size: 1rem;
+    padding: 12px 24px;
   }
 }
 
 @media (max-width: 480px) {
-  .notfound-content {
-    padding: 35px 20px;
-    border-radius: 20px;
+  .nf-code {
+    font-size: 3.5rem;
   }
-  
-  .error-code {
-    font-size: 5rem;
-  }
-  
-  .error-title {
-    font-size: 1.5rem;
-  }
-  
-  .error-message {
-    font-size: 1rem;
-    padding: 0 10px;
-  }
-  
-  .wisdom-card {
-    padding: 20px 15px;
-    margin: 30px 0;
-  }
-  
-  .home-button {
-    padding: 12px 25px;
-    font-size: 1rem;
-  }
-  
-  .luxury-footer {
-    margin-top: 40px;
-  }
-}
 
-/* Animation Classes */
-.animate-on-load {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: all 0.6s ease-out;
-}
+  .nf-title {
+    font-size: 1.2rem;
+  }
 
-.animate-on-load.animate {
-  opacity: 1;
-  transform: translateY(0);
+  .nf-button {
+    font-size: 0.95rem;
+    padding: 10px 20px;
+  }
 }
