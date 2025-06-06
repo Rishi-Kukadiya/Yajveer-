@@ -1,22 +1,23 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-const fectchuserdata = createAsyncThunk(
-  "users/fectch",
+const orderdata = createAsyncThunk(
+  "order/fectch",
   async (args, thunkAPI) => {
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_SERVER}/api/v1/users/gettotalusers`
+        `${import.meta.env.VITE_SERVER}/api/v1/users/admin/orders`
       );
       const data = await response.json();
+      console.log(data);
       return data.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
-  }
+  }     
 );
 
-const UsersSlice = createSlice({
-  name: "users",
+const OrderSlice = createSlice({
+  name: "order",
   initialState: {
     data: [],
     loading: false,
@@ -25,21 +26,21 @@ const UsersSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fectchuserdata.pending, (state) => {
+      .addCase(orderdata.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(fectchuserdata.fulfilled, (state, action) => {
+      .addCase(orderdata.fulfilled, (state, action) => {
         state.data = action.payload;
         state.loading = false;
         state.error = null;
       })
-      .addCase(fectchuserdata.rejected, (state, action) => {
+      .addCase(orderdata.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });
   },
 });
 
-export default UsersSlice.reducer;
-export { fectchuserdata };
+export default OrderSlice.reducer;
+export { orderdata };

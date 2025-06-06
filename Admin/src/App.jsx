@@ -11,45 +11,45 @@ import { fectchdata } from "./Redux/Review";
 import { contactdata } from "./Redux/Contactus";
 import { fectchuserdata } from "./Redux/User";
 import { useEffect } from "react";
+import { orderdata } from "./Redux/Order";
 import Notfound from "./components/Notfound";
 
 function App() {
   const dispatch = useDispatch();
-  
-  const {
-    loading: cartLoading,
-    error: cartError
-  } = useSelector((state) => state.cart);
 
-  const {
-    loading: reviewLoading,
-    error: reviewError
-  } = useSelector((state) => state.reviews);
+  const { loading: cartLoading, error: cartError } = useSelector(
+    (state) => state.cart
+  );
 
-  const {
-     loading : contactusLoading,
-     error : contactusError
-  } = useSelector((state) => state.contactus);
+  const { loading: reviewLoading, error: reviewError } = useSelector(
+    (state) => state.reviews
+  );
 
+  const { loading: contactusLoading, error: contactusError } = useSelector(
+    (state) => state.contactus
+  );
 
-  const {
-     loading : userLoading,
-     error : userError
-  } = useSelector((state) => state.users);
+  const { loading: userLoading, error: userError } = useSelector(
+    (state) => state.users
+  );
+
+  const { loading: OrderLoading, error: OrderError } = useSelector(
+    (state) => state.order
+  );
 
   useEffect(() => {
     dispatch(Fectchdata());
     dispatch(fectchdata());
     dispatch(contactdata());
     dispatch(fectchuserdata());
+    dispatch(orderdata());
   }, [dispatch]);
 
-
-  if (cartLoading || reviewLoading || contactusLoading || userLoading) {
+  if (cartLoading || reviewLoading || contactusLoading || userLoading ||  OrderLoading) {
     return <LoadingAnimation />;
   }
 
-  if (cartError || reviewError || contactusError || userError) {
+  if (cartError || reviewError || contactusError || userError || OrderError) {
     return (
       <div className="error-container">
         <h2>Error Loading Data</h2>
@@ -58,6 +58,9 @@ function App() {
           onClick={() => {
             dispatch(Fectchdata());
             dispatch(fectchdata());
+            dispatch(contactdata());
+            dispatch(fectchuserdata());
+            dispatch(orderdata());
           }}
         >
           Retry

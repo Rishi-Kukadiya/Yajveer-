@@ -18,6 +18,7 @@ import Reviews from "./Reviews";
 import Users from "./Users";
 import { useSelector } from "react-redux";
 import "../CSS/Home.css";
+import Order from "./Order";
 import LineChart from "./LineChart";
 
 const mockLineData = [
@@ -243,7 +244,7 @@ function Home() {
           <Route path="/users" element={<Users></Users>} />
           <Route
             path="/orders"
-            element={<div>Orders Page (Coming Soon)</div>}
+            element={<Order></Order>}
           />
           <Route path="/query" element={<Contactus></Contactus>} />
           <Route path="/reviews" element={<Reviews></Reviews>} />

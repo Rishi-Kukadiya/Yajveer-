@@ -4,13 +4,15 @@
   import ReviewsSlice from "./Review.js";
   import ContactusSlice from "./Contactus.js";
   import UsersSlice from "./User.js";
+  import OrderSlice from "./Order.js";
 
   const store = configureStore({
     reducer: {
       cart: CartSlice,
       reviews: ReviewsSlice,
       contactus : ContactusSlice,
-      users : UsersSlice
+      users : UsersSlice,
+      order : OrderSlice,
     },
   });
 
