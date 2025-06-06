@@ -30,6 +30,7 @@ const CheckoutForm = ({ onClose }) => {
 
   const buildProductsPayload = () =>
     cartItems.map((item) => ({
+      productName : item.productName,
       productId: item._id,
       weightInGrams: parseInt(item.selectedWeight),
       quantity: item.quantity,
