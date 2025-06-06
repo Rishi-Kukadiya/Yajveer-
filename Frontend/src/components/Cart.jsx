@@ -220,7 +220,7 @@ export default function Cart() {
                     </button>
                   </div>
                   <div className="item-total">
-                    ₹
+                  ₹
                     {(parseFloat(item.price) * parseInt(item.quantity)).toFixed(
                       2
                     )}

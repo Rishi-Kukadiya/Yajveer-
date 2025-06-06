@@ -30,7 +30,6 @@ import { Toaster } from "react-hot-toast";
 import CheckoutForm from "./components/CheckoutForm";
 import Notfound from "./components/Notfound";
 
-
 const App = () => {
   const dispatch = useDispatch();
   const { loading: cartLoading, error: cartError } = useSelector(
@@ -76,9 +75,11 @@ const App = () => {
           style: {
             background: "#333",
             color: "#fff",
+            zIndex: 100000, 
           },
         }}
       />
+
       <ScrollToTop />
       <Routes>
         <Route path="/" element={<Home></Home>}></Route>
