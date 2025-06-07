@@ -173,7 +173,7 @@ function Home() {
             </span>
             Reviews
           </Link>
-          <Link to="/admin/reports" className="nav-item">
+          <Link to="/admin/orderHistory" className="nav-item">
             <span className="nav-icon">
               <HiOutlineDocumentReport />
             </span>

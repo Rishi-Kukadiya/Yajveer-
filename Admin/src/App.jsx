@@ -13,6 +13,7 @@ import { fectchuserdata } from "./Redux/User";
 import { useEffect } from "react";
 import { orderdata } from "./Redux/Order";
 import { orderhistorydata } from "./Redux/OrderHistory";
+import { Toaster } from "react-hot-toast";
 import Notfound from "./components/Notfound";
 
 function App() {
@@ -89,6 +90,18 @@ function App() {
   }
 
   return (
+    <>
+    <Toaster
+        position="top-right"
+        toastOptions={{
+          duration: 2000,
+          style: {
+            background: "#333",
+            color: "#fff",
+            zIndex: 100000, 
+          },
+        }}
+      />
     <Routes>
       <Route path="/" element={<Login />} />
       <Route
@@ -102,6 +115,7 @@ function App() {
       <Route path="/forgotPassword" element={<ForgotPass />} />
       <Route path="*" element={<Notfound></Notfound>}></Route>
     </Routes>
+    </>
   );
 }
 

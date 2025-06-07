@@ -1,19 +1,16 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-const orderdata = createAsyncThunk(
-  "order/fectch",
-  async (args, thunkAPI) => {
-    try {
-      const response = await fetch(
-        `${import.meta.env.VITE_SERVER}/api/v1/users/admin/orders`
-      );
-      const data = await response.json();
-      return data.data;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
-    }
-  }     
-);
+const orderdata = createAsyncThunk("order/fectch", async (args, thunkAPI) => {
+  try {
+    const response = await fetch(
+      `${import.meta.env.VITE_SERVER}/api/v1/users/admin/orders`
+    );
+    const data = await response.json();
+    return data.data;
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error.message);
+  }
+});
 
 const OrderSlice = createSlice({
   name: "order",
@@ -22,7 +19,12 @@ const OrderSlice = createSlice({
     loading: false,
     error: null,
   },
-  reducers: {},
+  reducers: {
+    deleteOrder: (state, action) => {
+      const idToDelete = action.payload;
+      state.data = state.data.filter((review) => review.orderId !== idToDelete);
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(orderdata.pending, (state) => {
@@ -42,4 +44,5 @@ const OrderSlice = createSlice({
 });
 
 export default OrderSlice.reducer;
+export const { deleteOrder } = OrderSlice.actions;
 export { orderdata };
