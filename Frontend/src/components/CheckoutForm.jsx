@@ -5,11 +5,13 @@ import { toast } from "react-hot-toast";
 import LoadingAnimation from "./LoadingAnimation";
 import { useDispatch } from "react-redux";
 import { clearCart } from "../Redux/CartSlice";
+import { useNavigate } from "react-router";
 import axios from "axios";
 import "../CSS/CheckoutForm.css";
 
 const CheckoutForm = ({ onClose }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const cartItems = useSelector((state) => state.cart.items);
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -103,8 +105,7 @@ const CheckoutForm = ({ onClose }) => {
       );
 
       toast.success("Order placed successfully!");
-      dispatch(clearCart());
-      // navigate("/thank-you");        // optional — redirect
+      dispatch(clearCart());       // optional — redirect
       setFormData({
         name: "",
         email: "",
@@ -113,6 +114,7 @@ const CheckoutForm = ({ onClose }) => {
         pincode: "",
       });
       onClose(); // close the modal
+      navigate("/greeting");
     } catch (err) {
       const msg =
         err.response?.data?.message ||

@@ -27,6 +27,7 @@ import Blog from "./components/Blog";
 import BlogDetail from "./components/BlogDetail";
 import Cart from "./components/Cart";
 import { Toaster } from "react-hot-toast";
+import GreetingForm from "./components/Greetingform";
 import CheckoutForm from "./components/CheckoutForm";
 import Notfound from "./components/Notfound";
 
@@ -129,6 +130,7 @@ const App = () => {
         <Route path="/blog/:id" element={<BlogDetail />} />
         <Route path="/cart" element={<Cart />}></Route>
         <Route path="/checkout" element={<CheckoutForm />}></Route>
+        <Route path="/greeting" element={<GreetingForm />}></Route>
         <Route path="/404" element={<Notfound></Notfound>} />
         <Route path="*" element={<Notfound></Notfound>}></Route>
       </Routes>
