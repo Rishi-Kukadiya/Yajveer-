@@ -9,9 +9,7 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  /* prevent unwanted scrollbars */
 }
-
 
 .sidebar1-content {
   background: white;
@@ -23,10 +21,7 @@
   flex-direction: column;
   animation: slideIn 0.3s ease forwards;
   overflow: hidden;
-  /* important: prevent horizontal scroll */
 }
-
-
 
 @keyframes slideIn {
   from {
@@ -84,8 +79,7 @@
 }
 
 .contactSection {
-  padding-top: 20px;
-  padding-left: 20px;
+  padding: 5px 20px 20px 20px;
   color: gray;
   flex-shrink: 0;
 }
@@ -118,13 +112,13 @@
   color: #444;
 }
 
-
 .contactItem:hover i {
   color: green;
 }
 
 .authSection {
-  margin-top: 20px;
+  margin: 20px 0 30px;
+  padding-bottom: 20px;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -141,7 +135,6 @@
 .authLink:hover {
   text-decoration: underline;
 }
-
 
 @media (min-width:1024px) {
   .sidebar1-overlay {

@@ -105,7 +105,7 @@ const CheckoutForm = ({ onClose }) => {
       );
 
       toast.success("Order placed successfully!");
-      dispatch(clearCart());       // optional — redirect
+      dispatch(clearCart());       
       setFormData({
         name: "",
         email: "",
@@ -205,6 +205,8 @@ const CheckoutForm = ({ onClose }) => {
           </div>
         </div>
 
+        <p className="delivery-note">All taxes included. Delivery charge (up to ₹100) is extra.</p>
+
         <button type="submit" className="proceed-payment-btn">
           Proceed to Payment
         </button>
@@ -213,4 +215,4 @@ const CheckoutForm = ({ onClose }) => {
   );
 };
 
-export default CheckoutForm;
+export default CheckoutForm;

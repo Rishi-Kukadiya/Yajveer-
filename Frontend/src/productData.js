@@ -1,6 +1,6 @@
 import jamunImg from "./assets/Jamun.jpg";
 import karelaImg from "./assets/Karela.jpg";
-import b12Img from "./assets/B121.jpg";
+import b12Img from "./assets/B12P.jpg";
 import moringaIMG from "./assets/Moringa.jpg";
 
 export const products = [
@@ -16,7 +16,7 @@ Jamun Extract helps manage diabetes, boosts digestion, and is a rich source of a
   },
   {
     id: 2,
-    title: "Karela Juice",
+    title: "Karela Powder",
     description:
       "Boost your immunity and manage diabetes with our bitter gourd (Karela) juice.",
     fullDescription: `Karela Juice, made from fresh bitter gourd, is packed with nutrients and antioxidants. It's especially beneficial for those with diabetes due to its blood sugar-lowering effects. It helps detoxify the liver, supports digestion, improves skin clarity, and boosts immune function. Karela is also known to cleanse the blood and reduce bad cholesterol levels. Drinking it regularly can lead to improved metabolism and overall vitality.
@@ -26,7 +26,7 @@ Karela Juice, made from fresh bitter gourd, is packed with nutrients and antioxi
   },
   {
     id: 3,
-    title: "Vitamin B12 Drops",
+    title: "B12 Powder",
     description:
       "Pure and potent B12 drops to combat fatigue and enhance energy naturally.",
     fullDescription: `Our Vitamin B12 Drops are a powerful way to maintain energy levels, support brain function, and improve mood. B12 is essential for red blood cell production and neurological health. These drops are especially helpful for vegetarians and those with B12 deficiencies. They are easy to absorb, fast-acting, and contribute to a healthy metabolism, nervous system, and immune defense. Ideal for daily wellness and vitality.

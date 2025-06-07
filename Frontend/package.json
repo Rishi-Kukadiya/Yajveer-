@@ -13,6 +13,7 @@
     "@reduxjs/toolkit": "^2.8.2",
     "axios": "^1.9.0",
     "bootstrap-icons": "^1.13.1",
+    "canvas-confetti": "^1.9.3",
     "framer-motion": "^12.11.3",
     "fuse.js": "^7.1.0",
     "lucide-react": "^0.509.0",
