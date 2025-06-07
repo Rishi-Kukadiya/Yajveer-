@@ -63,7 +63,6 @@ export default function Login() {
 
       const result = response.data;
       if (result.success) {
-        console.log(result);
         sessionStorage.setItem("isLoggedInAdmin", "true");
         setPopupMessage(result.message);
         setTimeout(() => setRedirect(true), 2000);

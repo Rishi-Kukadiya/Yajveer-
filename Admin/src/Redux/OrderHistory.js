@@ -1,13 +1,14 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-const orderdata = createAsyncThunk(
-  "order/fectch",
+const orderhistorydata = createAsyncThunk(
+  "orderhistory/fectch",
   async (args, thunkAPI) => {
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_SERVER}/api/v1/users/admin/orders`
+        `${import.meta.env.VITE_SERVER}/api/v1/users/admin/orderhistory`
       );
       const data = await response.json();
+      console.log(data);
       return data.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -15,8 +16,8 @@ const orderdata = createAsyncThunk(
   }     
 );
 
-const OrderSlice = createSlice({
-  name: "order",
+const OrderhistorySlice = createSlice({
+  name: "OrderHistory",
   initialState: {
     data: [],
     loading: false,
@@ -25,21 +26,21 @@ const OrderSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(orderdata.pending, (state) => {
+      .addCase(orderhistorydata.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(orderdata.fulfilled, (state, action) => {
+      .addCase(orderhistorydata.fulfilled, (state, action) => {
         state.data = action.payload;
         state.loading = false;
         state.error = null;
       })
-      .addCase(orderdata.rejected, (state, action) => {
+      .addCase(orderhistorydata.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });
   },
 });
 
-export default OrderSlice.reducer;
-export { orderdata };
+export default OrderhistorySlice.reducer;
+export { orderhistorydata };

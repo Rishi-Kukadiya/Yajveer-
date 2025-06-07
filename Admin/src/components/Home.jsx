@@ -19,6 +19,7 @@ import Users from "./Users";
 import { useSelector } from "react-redux";
 import "../CSS/Home.css";
 import Order from "./Order";
+import OrderHistory from "./OrderHistory.";
 import LineChart from "./LineChart";
 
 const mockLineData = [
@@ -176,7 +177,7 @@ function Home() {
             <span className="nav-icon">
               <HiOutlineDocumentReport />
             </span>
-            Reports
+            OrderHistory
           </Link>
           <Link to="/admin/settings" className="nav-item">
             <span className="nav-icon">
@@ -249,8 +250,8 @@ function Home() {
           <Route path="/query" element={<Contactus></Contactus>} />
           <Route path="/reviews" element={<Reviews></Reviews>} />
           <Route
-            path="/reports"
-            element={<div>Reports Page (Coming Soon)</div>}
+            path="/orderHistory"
+            element={<OrderHistory></OrderHistory>}
           />
           <Route
             path="/settings"

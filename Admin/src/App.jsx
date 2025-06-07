@@ -12,6 +12,7 @@ import { contactdata } from "./Redux/Contactus";
 import { fectchuserdata } from "./Redux/User";
 import { useEffect } from "react";
 import { orderdata } from "./Redux/Order";
+import { orderhistorydata } from "./Redux/OrderHistory";
 import Notfound from "./components/Notfound";
 
 function App() {
@@ -33,9 +34,11 @@ function App() {
     (state) => state.users
   );
 
-  const { loading: OrderLoading, error: OrderError } = useSelector(
-    (state) => state.order
-  );
+  const { loading: OrderHistoryLoading, error: OrderHistoryError } =
+    useSelector((state) => state.orderhistory);
+
+  const { loading: OrderLoading, error: OrderError } =
+    useSelector((state) => state.order);
 
   useEffect(() => {
     dispatch(Fectchdata());
@@ -43,13 +46,28 @@ function App() {
     dispatch(contactdata());
     dispatch(fectchuserdata());
     dispatch(orderdata());
+    dispatch(orderhistorydata());
   }, [dispatch]);
 
-  if (cartLoading || reviewLoading || contactusLoading || userLoading ||  OrderLoading) {
+  if (
+    cartLoading ||
+    reviewLoading ||
+    contactusLoading ||
+    userLoading ||
+    OrderLoading ||
+    OrderHistoryLoading
+  ) {
     return <LoadingAnimation />;
   }
 
-  if (cartError || reviewError || contactusError || userError || OrderError) {
+  if (
+    cartError ||
+    reviewError ||
+    contactusError ||
+    userError ||
+    OrderError ||
+    OrderHistoryError
+  ) {
     return (
       <div className="error-container">
         <h2>Error Loading Data</h2>
@@ -61,6 +79,7 @@ function App() {
             dispatch(contactdata());
             dispatch(fectchuserdata());
             dispatch(orderdata());
+            dispatch(orderhistorydata());
           }}
         >
           Retry

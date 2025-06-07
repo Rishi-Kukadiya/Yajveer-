@@ -5,6 +5,7 @@
   import ContactusSlice from "./Contactus.js";
   import UsersSlice from "./User.js";
   import OrderSlice from "./Order.js";
+  import OrderhistorySlice from "./OrderHistory.js";
 
   const store = configureStore({
     reducer: {
@@ -13,6 +14,7 @@
       contactus : ContactusSlice,
       users : UsersSlice,
       order : OrderSlice,
+      orderhistory : OrderhistorySlice,
     },
   });
 

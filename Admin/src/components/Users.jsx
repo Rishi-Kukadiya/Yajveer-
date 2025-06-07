@@ -3,7 +3,6 @@ import "../CSS/Users.css";
 
 export default function Users() {
   const users = useSelector((state) => state.users?.data?.totalUsers || []);
-  console.log("Loaded Users →", users);
 
   return (
     <div className="users-container">
