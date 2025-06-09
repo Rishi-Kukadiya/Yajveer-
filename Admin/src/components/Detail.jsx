@@ -11,7 +11,7 @@ import {
   FiChevronLeft,
   FiChevronRight,
 } from "react-icons/fi";
-import ErrorPopup from "./ErrorPopup";
+import { toast } from "react-hot-toast";
 
 const Detail = () => {
   const { id } = useParams();
@@ -27,7 +27,6 @@ const Detail = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0); // Find the product from the Redux store or fetch if not available
-  const [popupMessage, setPopupMessage] = useState("");
   useEffect(() => {
     const getProduct = async () => {
       if (products && products.length > 0) {
@@ -45,7 +44,7 @@ const Detail = () => {
         );
         setProduct(response.data.data);
       } catch (err) {
-        setPopupMessage(
+        toast.error(
           err.response?.data?.message || "Failed to fetch product details"
         );
         console.error("Error fetching product:", err);
@@ -288,7 +287,6 @@ const Detail = () => {
           </div>
         </div>
       </div>
-      <ErrorPopup message={popupMessage} onClose={() => setPopupMessage("")} />
     </div>
   );
 };
