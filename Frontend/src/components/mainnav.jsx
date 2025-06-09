@@ -3,7 +3,7 @@ import { Link } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 export default function MainNav() {
   const dispatch = useDispatch();
-  const { data: products, loading, error } = useSelector((state) => state.cart);
+  const { data: products } = useSelector((state) => state.cart);
   return (
     <>
       <nav className="mainNav">

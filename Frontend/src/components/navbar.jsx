@@ -1,13 +1,12 @@
 import { Link } from "react-router";
 import { useState, useEffect } from "react";
 import "../CSS/navbar.css";
-import ErrorPopup from "./ErrorPopup";
 import axios from "axios";
+import { toast } from "react-hot-toast";
 import LoadingAnimation from "./LoadingAnimation";
 
 export default function Navbar() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [popupMessage, setPopupMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -28,16 +27,16 @@ export default function Navbar() {
       if (result.success) {
         localStorage.setItem("isLoginUser", "false");
         setIsLoggedIn(false);
-        setPopupMessage("Logout successful");
+        toast.success("Logout successful");
       } else {
-        setPopupMessage("Logout failed: " + result.message);
+        toast.error("Logout failed: " + result.message);
       }
     } catch (error) {
       localStorage.setItem("isLoginUser", "true");
       if (error.response?.data?.message) {
-        setPopupMessage(error.response.data.message);
+        toast.error(error.response.data.message);
       } else {
-        setPopupMessage("Something went wrong. Please try again.");
+        toast.error("Something went wrong. Please try again.");
       }
     } finally {
       setIsLoading(false);
@@ -88,10 +87,6 @@ export default function Navbar() {
               )}
             </div>
           </nav>
-          <ErrorPopup
-            message={popupMessage}
-            onClose={() => setPopupMessage("")}
-          />
         </>
       )}
     </>

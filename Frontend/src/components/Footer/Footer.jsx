@@ -2,8 +2,7 @@ import "../../CSS/Footer/Footer.css";
 import { Link } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 export default function Footer() {
-  const dispatch = useDispatch();
-  const { data: products, loading, error } = useSelector((state) => state.cart);
+  const { data: products } = useSelector((state) => state.cart);
   return (
     <footer className="footer">
       <div className="footer-content">

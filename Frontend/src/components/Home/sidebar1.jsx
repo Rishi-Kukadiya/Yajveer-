@@ -4,7 +4,7 @@ import { Link } from "react-router";
 import ErrorPopup from "../ErrorPopup";
 import axios from "axios";
 import LoadingAnimation from "../LoadingAnimation";
-import { useDispatch, useSelector } from "react-redux";
+import {useSelector } from "react-redux";
 
 export default function Sidebar1({ onClose }) {
   const { data: products } = useSelector((state) => state.cart);

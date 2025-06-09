@@ -8,7 +8,7 @@ import MainNav from "./mainnav";
 import Footer from "./Footer/Footer";
 import Sidebar from "./Home/sidebar";
 import Sidebar1 from "./Home/sidebar1";
-import ErrorPopup from "./ErrorPopup";
+import { toast } from "react-hot-toast";
 import { Navigate } from "react-router";
 import LoadingAnimation from "./LoadingAnimation";
 
@@ -21,7 +21,6 @@ export default function SignUp() {
     mobileNumber: "",
   });
 
-  const [popupMessage, setPopupMessage] = useState("");
 
   const validate = () => {
     const emailRegex =
@@ -29,17 +28,17 @@ export default function SignUp() {
     const phoneRegex = /^\d{10}$/;
 
     if (!formData.email || !emailRegex.test(formData.email)) {
-      setPopupMessage("Please enter a valid email address.");
+      toast.error("Please enter a valid email address.");
       return false;
     }
 
     if (!formData.password || formData.password.length < 6) {
-      setPopupMessage("Password must be at least 6 characters.");
+      toast.error("Password must be at least 6 characters.");
       return false;
     }
 
     if (!formData.mobileNumber || !phoneRegex.test(formData.mobileNumber)) {
-      setPopupMessage("Please enter a valid 10-digit mobile number.");
+      toast.error("Please enter a valid 10-digit mobile number.");
       return false;
     }
     return true;
@@ -68,14 +67,14 @@ export default function SignUp() {
 
       const result = await response.json();
       if (result.success) {
-        setPopupMessage(result.message);
+        toast.success(result.message);
         setTimeout(() => setRedirect(true), 2000);
       } else {
         setPopupMessage(result.message);
       }
     } catch (error) {
       console.error("Error posting data:", error);
-      setPopupMessage("Network error or server not responding.");
+      toast.error("Network error or server not responding.");
     } finally {
       setIsLoading(false);
     }
@@ -160,10 +159,6 @@ export default function SignUp() {
             </div>
           </div>
           <Footer></Footer>
-          <ErrorPopup
-            message={popupMessage}
-            onClose={() => setPopupMessage("")}
-          />
         </>
       )}
     </>
