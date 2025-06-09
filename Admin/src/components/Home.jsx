@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { use, useState } from "react";
 import { Link, Routes, Route } from "react-router-dom";
 import {
   FiHome,
@@ -99,6 +99,7 @@ const mockLineData = [
 function Home() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const { data: user } = useSelector((state) => state.users);
+  console.log(user);
   const { data: products} = useSelector((state) => state.cart);
   const { data: reviews } = useSelector((state) => state.reviews);
   const toggleSidebar = () => {
@@ -109,7 +110,7 @@ function Home() {
     {
       id: 1,
       title: "Total Users",
-      value: `${user.totalUsers.length}`,
+      value: `${user?.totalUsers?.length || 0}`,
       icon: <FiUsers />,
     },
     {
