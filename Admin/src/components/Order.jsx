@@ -1,16 +1,35 @@
+// Order.jsx
 import "../CSS/Order.css";
 import { useSelector, useDispatch } from "react-redux";
 import LoadingAnimation from "./LoadingAnimation";
 import { toast } from "react-hot-toast";
-import { useState } from "react";
-import { deleteOrder } from "../Redux/Order.js";
+import { useState, useEffect } from "react";
+import { deleteOrder, addOrder } from "../Redux/Order.js"; // Make sure addOrder is implemented!
 import { orderhistorydata } from "../Redux/OrderHistory.js";
 import axios from "axios";
+import { io } from "socket.io-client";
 
 export default function Order() {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
   const { data: orders } = useSelector((state) => state.order);
+
+  // Real-time updates: Listen for newOrder event from backend
+  useEffect(() => {
+    const socket = io("http://localhost:2590", {
+      withCredentials: true,
+      transports: ["websocket"],
+    });
+
+    socket.on("newOrder", (order) => {
+      dispatch(addOrder(order));
+      toast.success("New order received!");
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, [dispatch]);
 
   const calculateTotal = (products) => {
     return products.reduce(
@@ -23,18 +42,16 @@ export default function Order() {
     setIsLoading(true);
     try {
       await axios.patch(
-        `${
-          import.meta.env.VITE_SERVER
-        }/api/v1/users/admin/orders/${orderId}/markdone`
+        `${import.meta.env.VITE_SERVER}/api/v1/users/admin/orders/${orderId}/markdone`
       );
       dispatch(deleteOrder(orderId));
       dispatch(orderhistorydata());
-      toast.success("Order Archived successfully.");
+      toast.success("Order archived successfully.");
     } catch (error) {
       if (error.response?.data?.message) {
         toast.error(error.response.data.message);
       } else {
-        toast.error("Failed to Archive Order!!");
+        toast.error("Failed to archive order!");
       }
     } finally {
       setIsLoading(false);
@@ -44,27 +61,28 @@ export default function Order() {
   return isLoading ? (
     <LoadingAnimation />
   ) : (
-    <div className="orders-dashboard">
-      <h1 className="dashboard-title">Customer Orders</h1>
-      {orders && orders.length > 0 ? (
-        <div className="table-container">
-          <table className="orders-table">
-            <thead>
-              <tr>
-                <th>Order ID</th>
-                <th>Customer</th>
-                <th>Contact</th>
-                <th>Products</th>
-                <th>Total</th>
-                <th className="payment-status-header">
-                  <div>Payment</div>
-                  <div>Status</div>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {orders.map((order, index) => (
-                <>
+    <>
+      <div className="orders-dashboard">
+        <h1 className="dashboard-title">Customer Orders</h1>
+
+        {orders && orders.length > 0 ? (
+          <div className="table-container">
+            <table className="orders-table">
+              <thead>
+                <tr>
+                  <th>Order ID</th>
+                  <th>Customer</th>
+                  <th>Contact</th>
+                  <th>Products</th>
+                  <th>Total</th>
+                  <th className="payment-status-header">
+                    <div>Payment</div>
+                    <div>Status</div>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {orders.map((order) => (
                   <tr key={order.orderId}>
                     <td className="order-id">{order.orderId}</td>
                     <td className="customer-info">
@@ -73,10 +91,10 @@ export default function Order() {
                     </td>
                     <td className="customer-phone">{order.mobilenumber}</td>
                     <td className="products-info">
-                      {order.products.map((product, idx) => (
-                        <div key={idx} className="product-item">
+                      {order.products.map((product, index) => (
+                        <div key={index} className="product-item">
                           <div className="product-name">
-                            {product.productId?.productName || "N/A"}
+                            {product.productId?.productName || product.productName || "N/A"}
                           </div>
                           <div className="product-details">
                             <span>{product.weightInGrams}g</span>
@@ -99,20 +117,14 @@ export default function Order() {
                       </button>
                     </td>
                   </tr>
-                  {index !== orders.length - 1 && (
-                    <tr className="order-separator">
-                      <td colSpan="6"></td>
-                    </tr>
-                  )}
-                </>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      ) : (
-        <div className="no-orders">No orders found</div>
-      )}
-         
-    </div>
-  );
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ) : (
+          <div className="no-orders">No orders found</div>
+        )}
+      </div>
+    </>
+  );
 }
