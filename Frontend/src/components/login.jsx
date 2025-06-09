@@ -60,15 +60,15 @@ export default function Login() {
 
       const result = response.data;
       if (result.success) {
-        localStorage.setItem("isLoginUser", "true");
+        sessionStorage.setItem("isLoginUser", "true");
         toast.error(result.message);
         setTimeout(() => setRedirect(true), 2000);
       } else {
-        localStorage.setItem("isLoginUser", "false");
+        sessionStorage.setItem("isLoginUser", "false");
         toast.error(result.message);
       }
     } catch (error) {
-      localStorage.setItem("isLoginUser", "false");
+      sessionStorage.setItem("isLoginUser", "false");
       if (error.response?.data?.message) {
         toast.error(error.response.data.message);
       } else {

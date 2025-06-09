@@ -10,7 +10,7 @@ export default function Navbar() {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    const loginStatus = localStorage.getItem("isLoginUser") === "true";
+    const loginStatus = sessionStorage.getItem("isLoginUser") === "true";
     setIsLoggedIn(loginStatus);
   }, []);
 
@@ -25,14 +25,14 @@ export default function Navbar() {
 
       const result = response.data;
       if (result.success) {
-        localStorage.setItem("isLoginUser", "false");
+        sessionStorage.setItem("isLoginUser", "false");
         setIsLoggedIn(false);
         toast.success("Logout successful");
       } else {
         toast.error("Logout failed: " + result.message);
       }
     } catch (error) {
-      localStorage.setItem("isLoginUser", "true");
+      sessionStorage.setItem("isLoginUser", "true");
       if (error.response?.data?.message) {
         toast.error(error.response.data.message);
       } else {
