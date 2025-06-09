@@ -61,7 +61,7 @@ export default function Login() {
       const result = response.data;
       if (result.success) {
         sessionStorage.setItem("isLoginUser", "true");
-        toast.error(result.message);
+        toast.success(result.message);
         setTimeout(() => setRedirect(true), 2000);
       } else {
         sessionStorage.setItem("isLoginUser", "false");
