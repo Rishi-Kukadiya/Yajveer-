@@ -17,7 +17,7 @@ export default function Order() {
 
   // Real-time updates: Listen for newOrder event from backend
   useEffect(() => {
-    const socket = io("http://localhost:2590", {
+    const socket = io("https://yajveerback.vercel.app", {
       withCredentials: true,
       transports: ["websocket"],
     });
