@@ -57,12 +57,11 @@ const Detail = () => {
   }, [products, id]);
 
   const calculateDiscountedPrice = (actualPrice, discount) => {
-    return Math.round(actualPrice - (actualPrice * discount) / 100);
+    return Math.round(actualPrice + (actualPrice * discount) / 100);
   };
 
   const handleDelete = async () => {
     setIsLoading(true);
-    setPopupMessage(null);
     console.log("Deleting product with id:", id);
     try {
       await axios.delete(
@@ -70,10 +69,10 @@ const Detail = () => {
         { withCredentials: true }
       );
       dispatch(Fectchdata());
-       toast.success("Product deleted successfully");
+      toast.success("Product deleted successfully");
       navigate("/admin/products");
     } catch (err) {
-       toast.error(
+      toast.error(
         err.response?.data?.message ||
           "Failed to delete product. Please try again."
       );
@@ -101,13 +100,11 @@ const Detail = () => {
     }
   };
 
-
   useEffect(() => {
     if (!product || !product.photos || product.photos.length <= 1) return;
-    const timer = setInterval(nextImage, 5000); 
+    const timer = setInterval(nextImage, 5000);
     return () => clearInterval(timer);
   }, [product, nextImage]);
-
 
   const parseArrayField = (field) => {
     if (!field) return [];
@@ -206,11 +203,15 @@ const Detail = () => {
 
           <div className="price-section-detailed">
             <span className="current-price-detailed">
-              ₹{calculateDiscountedPrice(product.actualPrice, product.discount)}
+              ₹{product.actualPrice}
             </span>
             {product.discount > 0 && (
               <span className="original-price-detailed">
-                ₹{product.actualPrice}
+                ₹
+                {calculateDiscountedPrice(
+                  product.actualPrice,
+                  product.discount
+                )}
               </span>
             )}
             {product.discount > 0 && (

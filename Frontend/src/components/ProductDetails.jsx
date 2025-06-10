@@ -33,15 +33,15 @@ export default function ProductDetails() {
       weights: ["75g", "100g", "250g"],
       prices: {
         "75g": `${product.actualPrice}`,
-        "100g": `${(1.2*product.actualPrice*0.95).toFixed(0)}`,
-        "250g": `${(2*product.actualPrice*0.91).toFixed(0)}`,
+        "100g": `${(1.9*product.actualPrice*0.97).toFixed(0)}`,
+        "250g": `${(2.6*product.actualPrice*0.988).toFixed(0)}`,
       },
     },
     pouch: {
       weights: ["100g", "200g"],
       prices: {
         "100g": `${product.actualPrice}`,
-        "200g": `${(2 * product.actualPrice * 0.95).toFixed(0)}`,
+        "200g": `${(2 * product.actualPrice * 0.65).toFixed(0)}`,
       },
     },
   };
