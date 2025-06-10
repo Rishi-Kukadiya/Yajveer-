@@ -70,10 +70,10 @@ const Detail = () => {
         { withCredentials: true }
       );
       dispatch(Fectchdata());
-      setPopupMessage("Product deleted successfully");
+       toast.success("Product deleted successfully");
       navigate("/admin/products");
     } catch (err) {
-      setPopupMessage(
+       toast.error(
         err.response?.data?.message ||
           "Failed to delete product. Please try again."
       );
