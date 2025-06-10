@@ -22,6 +22,8 @@ export default function OrderHistory() {
                 <th>Order ID</th>
                 <th>Customer</th>
                 <th>Contact</th>
+                <th>Address</th>
+                <th>Created At</th>
                 <th>Products</th>
                 <th>Total</th>
               </tr>
@@ -36,6 +38,20 @@ export default function OrderHistory() {
                       <div className="customer-email">{order.email}</div>
                     </td>
                     <td className="customer-phone">{order.mobilenumber}</td>
+                    <td className="customer-address">
+                      {order.deliveryAddress}, {order.pincode}
+                    </td>
+                    <td className="created-at">
+                      <p>{new Date(order.createdAt).toLocaleString('en-IN', {
+                        timeZone: 'Asia/Kolkata',
+                        day: '2-digit',
+                        month: '2-digit',
+                        year: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        hour12: true
+                      })}</p>
+                    </td>
                     <td className="products-info">
                       {order.products.map((product, idx) => (
                         <div key={idx} className="product-item">
@@ -69,6 +85,6 @@ export default function OrderHistory() {
       ) : (
         <div className="no-orders">No order history found</div>
       )}
-    </div>
-  );
+    </div>
+  );
 }

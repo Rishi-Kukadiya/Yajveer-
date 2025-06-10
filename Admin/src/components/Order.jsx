@@ -13,6 +13,7 @@ export default function Order() {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
   const { data: orders } = useSelector((state) => state.order);
+  console.log(orders);
 
   // Real-time updates: Listen for newOrder event from backend
   useEffect(() => {
@@ -73,6 +74,8 @@ export default function Order() {
                   <th>Order ID</th>
                   <th>Customer</th>
                   <th>Contact</th>
+                  <th>Address</th>
+                  <th>Created At</th>
                   <th>Products</th>
                   <th>Total</th>
                   <th className="payment-status-header">
@@ -90,6 +93,20 @@ export default function Order() {
                       <div className="customer-email">{order.email}</div>
                     </td>
                     <td className="customer-phone">{order.mobilenumber}</td>
+                    <td className="customer-address">
+                      {order.deliveryAddress}, {order.pincode}
+                    </td>
+                    <td className="created-at">
+                      <p>{new Date(order.createdAt).toLocaleString('en-IN', {
+                        timeZone: 'Asia/Kolkata',
+                        day: '2-digit',
+                        month: '2-digit',
+                        year: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        hour12: true
+                      })}</p>
+                    </td>
                     <td className="products-info">
                       {order.products.map((product, index) => (
                         <div key={index} className="product-item">

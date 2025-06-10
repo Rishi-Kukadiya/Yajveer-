@@ -1,6 +1,5 @@
 import "../CSS/Login.css";
 import Ayur from "../assets/logp.jpg";
-import { Link } from "react-router";
 import { toast } from "react-hot-toast";
 import { Navigate } from "react-router";
 import { useState } from "react";
@@ -117,9 +116,6 @@ export default function Login() {
                     onChange={handleChange}
                   ></input>
                 </div>
-                <Link to="/forgotpassword">
-                  <p className="fogpass">Forgot Your Password</p>
-                </Link>
                 <button>Login</button>
               </form>
             </div>
