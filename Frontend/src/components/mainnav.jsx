@@ -89,8 +89,8 @@ export default function MainNav() {
                   ))}
             </div>
           </Link>
-          <Link to="/greeting" className="use deep-inner-button">
-            <p>Instructions</p>
+          <Link to="/Testimonial" className="use deep-inner-button">
+            <p>Testimonials</p>
           </Link>
 
           <Link to="/reviewForm" className="review deep-inner-button">
