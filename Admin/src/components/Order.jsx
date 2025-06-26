@@ -15,9 +15,9 @@ export default function Order() {
   const { data: orders } = useSelector((state) => state.order);
   console.log(orders);
 
-  // Real-time updates: Listen for newOrder event from backend
+  
   useEffect(() => {
-    const socket = io("https://yajveerback.vercel.app", {
+    const socket = io("https://back.yajveer.in", {
       withCredentials: true,
       transports: ["websocket"],
     });

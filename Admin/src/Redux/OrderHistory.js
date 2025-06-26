@@ -8,7 +8,6 @@ const orderhistorydata = createAsyncThunk(
         `${import.meta.env.VITE_SERVER}/api/v1/users/admin/orderhistory`
       );
       const data = await response.json();
-      console.log(data);
       return data.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);

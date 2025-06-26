@@ -135,7 +135,6 @@ function Home() {
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const { data: user } = useSelector((state) => state.users);
-  console.log(user);
   const { data: products } = useSelector((state) => state.cart);
   const { data: reviews } = useSelector((state) => state.reviews);
   const toggleSidebar = () => {

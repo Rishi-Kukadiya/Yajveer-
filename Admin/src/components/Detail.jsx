@@ -62,7 +62,6 @@ const Detail = () => {
 
   const handleDelete = async () => {
     setIsLoading(true);
-    console.log("Deleting product with id:", id);
     try {
       await axios.delete(
         `${import.meta.env.VITE_SERVER}/api/v1/products/products/${id}`,
