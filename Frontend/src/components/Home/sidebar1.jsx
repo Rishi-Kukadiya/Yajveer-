@@ -94,10 +94,6 @@ export default function Sidebar1({ onClose }) {
                   Signup
                 </Link>
                 <span>/</span>
-                <Link to="/reviewForm" className="authLink">
-                  Review
-                </Link>
- 
               </>
             ) : (
               <button className="authLink" onClick={handleLogout}>

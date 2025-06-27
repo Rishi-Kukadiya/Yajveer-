@@ -52,6 +52,10 @@ export default function Footer() {
               <i className="bi bi-envelope"></i>
               <Link to="/contact">Contact Us</Link>
             </li>
+            <li>
+              <i className="bi bi-pencil-square"></i>
+              <Link to="/reviewForm">Review</Link>
+            </li>
           </ul>
         </div>
 
