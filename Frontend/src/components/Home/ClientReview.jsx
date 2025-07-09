@@ -19,19 +19,20 @@ const ClientReview = () => {
     });
   };
 
-  const visibleReviews = Reviews.slice(
-    currentIndex,
-    currentIndex + itemsPerPage
-  );
-  if (visibleReviews.length < itemsPerPage) {
-    visibleReviews.push(
-      ...Reviews.slice(0, itemsPerPage - visibleReviews.length)
-    );
-  }
+  // const visibleReviews = Reviews.slice(
+  //   currentIndex,
+  //   currentIndex + itemsPerPage
+  // );
+  // if (visibleReviews.length < itemsPerPage) {
+  //   visibleReviews.push(
+  //     ...Reviews.slice(0, itemsPerPage - visibleReviews.length)
+  //   );
+  // }
 
-
-
-
+  const visibleReviews = Array.from({ length: itemsPerPage }, (_, i) => {
+    const index = (currentIndex + i) % Reviews.length;
+    return Reviews[index];
+  });
 
   return (
     <div className="reviews-wrapper">
@@ -43,21 +44,18 @@ const ClientReview = () => {
         </button>
 
         <div className="review-cards-container">
-          {visibleReviews.map((review, idx) => (
-            <div className="review-card" key={idx}>
-              <img
-                src={userlogo}
-                alt="User"
-                className="user-image"
-              />
-              <p className="review-text">"{review.review}"</p>
-              <h4 className="user-name">{review.name}</h4>
-              <div className="user-rating">
-                {"★".repeat(review.rating)}
-                {"☆".repeat(5 - review.rating)}
+          {visibleReviews.length > 0 &&
+            visibleReviews.map((review, idx) => (
+              <div className="review-card" key={review._id || idx}>
+                <img src={userlogo} alt="User" className="user-image" />
+                <p className="review-text">"{review.review}"</p>
+                <h4 className="user-name">{review.name}</h4>
+                <div className="user-rating">
+                  {"★".repeat(review.rating)}
+                  {"☆".repeat(5 - review.rating)}
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
         </div>
 
         <button className="arrow right" onClick={nextReviews}>
