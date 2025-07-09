@@ -1,48 +1,122 @@
-import { useState, useEffect } from "react";
+// import { useState, useEffect } from "react";
+// import "../../CSS/Home/ClientReview.css";
+// import { useSelector } from "react-redux";
+// import userlogo from "../../assets/User.jpg";
+
+// const ClientReview = () => {
+//   const { data: Reviews } = useSelector((state) => state.reviews);
+//   const [currentIndex, setCurrentIndex] = useState(0);
+//   const itemsPerPage = 4;
+
+//   const nextReviews = () => {
+//     setCurrentIndex((prev) => (prev + itemsPerPage) % Reviews.length);
+//   };
+
+//   const prevReviews = () => {
+//     setCurrentIndex((prev) => {
+//       const newIndex = prev - itemsPerPage;
+//       return newIndex < 0 ? Reviews.length - itemsPerPage : newIndex;
+//     });
+//   };
+
+//   const visibleReviews = Reviews.slice(
+//     currentIndex,
+//     currentIndex + itemsPerPage
+//   );
+//   if (visibleReviews.length < itemsPerPage) {
+//     visibleReviews.push(
+//       ...Reviews.slice(0, itemsPerPage - visibleReviews.length)
+//     );
+//   }
+
+
+//   return (
+//     <div className="reviews-wrapper">
+//       <h2 className="reviews-heading">What Our Customers Say</h2>
+
+//       <div className="reviews-slider">
+//         <button className="arrow left" onClick={prevReviews}>
+//           ❮
+//         </button>
+
+//         <div className="review-cards-container">
+//           {visibleReviews.length > 0 &&
+//             visibleReviews.map((review, idx) => (
+//               <div className="review-card" key={review._id || idx}>
+//                 <img src={userlogo} alt="User" className="user-image" />
+//                 <p className="review-text">"{review.review}"</p>
+//                 <h4 className="user-name">{review.name}</h4>
+//                 <div className="user-rating">
+//                   {"★".repeat(review.rating)}
+//                   {"☆".repeat(5 - review.rating)}
+//                 </div>
+//               </div>
+//             ))}
+//         </div>
+
+//         <button className="arrow right" onClick={nextReviews}>
+//           ❯
+//         </button>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default ClientReview;
+
+
+import { useState } from "react";
 import "../../CSS/Home/ClientReview.css";
 import { useSelector } from "react-redux";
 import userlogo from "../../assets/User.jpg";
 
 const ClientReview = () => {
-  const { data: Reviews } = useSelector((state) => state.reviews);
-  console.log(Reviews.length);
+  const { data: Reviews = [] } = useSelector((state) => state.reviews);
   const [currentIndex, setCurrentIndex] = useState(0);
   const itemsPerPage = 4;
 
+  // ✅ Prevent division by 0
+  const totalReviews = Reviews.length;
+
   const nextReviews = () => {
-    setCurrentIndex((prev) => (prev + itemsPerPage) % Reviews.length);
+    if (totalReviews > 0) {
+      setCurrentIndex((prev) => (prev + itemsPerPage) % totalReviews);
+    }
   };
 
   const prevReviews = () => {
-    setCurrentIndex((prev) => {
-      const newIndex = prev - itemsPerPage;
-      return newIndex < 0 ? Reviews.length - itemsPerPage : newIndex;
-    });
+    if (totalReviews > 0) {
+      setCurrentIndex((prev) => {
+        const newIndex = prev - itemsPerPage;
+        return newIndex < 0 ? (totalReviews + newIndex) % totalReviews : newIndex;
+      });
+    }
   };
 
-  const visibleReviews = Reviews.slice(
-    currentIndex,
-    currentIndex + itemsPerPage
-  );
-  if (visibleReviews.length < itemsPerPage) {
-    visibleReviews.push(
-      ...Reviews.slice(0, itemsPerPage - visibleReviews.length)
-    );
-  }
-
+  // ✅ Pure, non-mutating logic to create visibleReviews array
+  const visibleReviews = totalReviews === 0
+    ? []
+    : Array.from({ length: Math.min(itemsPerPage, totalReviews) }, (_, i) => {
+        const index = (currentIndex + i) % totalReviews;
+        return Reviews[index];
+      });
 
   return (
     <div className="reviews-wrapper">
       <h2 className="reviews-heading">What Our Customers Say</h2>
 
-      <div className="reviews-slider">
-        <button className="arrow left" onClick={prevReviews}>
-          ❮
-        </button>
+      {totalReviews === 0 ? (
+        <p className="no-reviews-msg">No reviews available yet.</p>
+      ) : (
+        <div className="reviews-slider">
+          {totalReviews > itemsPerPage && (
+            <button className="arrow left" onClick={prevReviews}>
+              ❮
+            </button>
+          )}
 
-        <div className="review-cards-container">
-          {visibleReviews.length > 0 &&
-            visibleReviews.map((review, idx) => (
+          <div className="review-cards-container">
+            {visibleReviews.map((review, idx) => (
               <div className="review-card" key={review._id || idx}>
                 <img src={userlogo} alt="User" className="user-image" />
                 <p className="review-text">"{review.review}"</p>
@@ -53,12 +127,15 @@ const ClientReview = () => {
                 </div>
               </div>
             ))}
-        </div>
+          </div>
 
-        <button className="arrow right" onClick={nextReviews}>
-          ❯
-        </button>
-      </div>
+          {totalReviews > itemsPerPage && (
+            <button className="arrow right" onClick={nextReviews}>
+              ❯
+            </button>
+          )}
+        </div>
+      )}
     </div>
   );
 };
