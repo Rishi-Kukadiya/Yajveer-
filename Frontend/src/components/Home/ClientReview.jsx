@@ -5,6 +5,7 @@ import userlogo from "../../assets/User.jpg";
 
 const ClientReview = () => {
   const { data: Reviews } = useSelector((state) => state.reviews);
+  console.log(Reviews.length);
   const [currentIndex, setCurrentIndex] = useState(0);
   const itemsPerPage = 4;
 
