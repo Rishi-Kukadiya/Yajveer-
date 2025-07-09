@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import "../../CSS/Home/ClientReview.css";
 import { useSelector } from "react-redux";
+import userlogo from "../../assets/User.jpg";
 
 const ClientReview = () => {
   const { data: Reviews } = useSelector((state) => state.reviews);
@@ -41,7 +42,7 @@ const ClientReview = () => {
           {visibleReviews.map((review, idx) => (
             <div className="review-card" key={idx}>
               <img
-                src={review.productPhoto}
+                src={userlogo}
                 alt="User"
                 className="user-image"
               />
