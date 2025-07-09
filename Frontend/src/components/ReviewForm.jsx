@@ -17,8 +17,8 @@ export default function ReviewForm() {
   const [name, setName] = useState("");
   const [review, setReview] = useState("");
   const [rating, setRating] = useState(""); // Rating is still a string initially
-  const [image, setImage] = useState(null);
-  const [selectedFileName, setSelectedFileName] = useState("");
+  // const [image, setImage] = useState(null);
+  // const [selectedFileName, setSelectedFileName] = useState("");
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -30,8 +30,6 @@ export default function ReviewForm() {
     const numericRating = parseFloat(rating);
     if (!name.trim()) {
       newErrors.name = "Name is required";
-    } else if (!image) {
-      newErrors.image = "Photo is required";
     }else if (!review.trim()) {
       newErrors.review = "Review is required";
     }else if (isNaN(numericRating) || numericRating < 0 || numericRating > 5) {
@@ -46,16 +44,16 @@ export default function ReviewForm() {
     return true;
   };
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setImage(file);
-      setSelectedFileName(file.name);
-    } else {
-      setImage(null);
-      setSelectedFileName("");
-    }
-  };
+  // const handleImageChange = (e) => {
+  //   const file = e.target.files[0];
+  //   if (file) {
+  //     setImage(file);
+  //     setSelectedFileName(file.name);
+  //   } else {
+  //     setImage(null);
+  //     setSelectedFileName("");
+  //   }
+  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -68,7 +66,7 @@ export default function ReviewForm() {
     formData.append("name", name);
     formData.append("review", review);
     formData.append("rating", parseFloat(rating)); // Ensure rating is sent as a number
-    formData.append("productPhoto", image);
+    // formData.append("productPhoto", image);
 
     setIsLoading(true);
 
@@ -91,7 +89,7 @@ export default function ReviewForm() {
         setName("");
         setReview("");
         setRating("");
-        setImage(null);
+        // setImage(null);
         setSelectedFileName("");
       } else {
         // Handle unexpected non-error responses
@@ -155,7 +153,7 @@ export default function ReviewForm() {
                       onChange={(e) => setName(e.target.value)}
                     />
                   </div>
-                  <div className="image-upload-section">
+                  {/* <div className="image-upload-section">
                     <label className="image-upload-label">
                       Upload <span className="highlight-text">Your</span> Photo
                     </label>
@@ -202,7 +200,7 @@ export default function ReviewForm() {
                         </span>
                       </div>
                     )}
-                  </div>
+                  </div> */}
                   <div className="form-group">
                     <textarea
                       placeholder="Write your review..."
