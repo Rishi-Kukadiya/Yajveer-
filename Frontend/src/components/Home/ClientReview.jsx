@@ -29,13 +29,11 @@ const ClientReview = () => {
   //   );
   // }
 
-let visibleReviews = Reviews.slice(currentIndex, currentIndex + itemsPerPage);
-if (visibleReviews.length < itemsPerPage) {
-  visibleReviews = [
-    ...visibleReviews,
-    ...Reviews.slice(0, itemsPerPage - visibleReviews.length),
-  ];
-}
+const visibleReviews = Array.from({ length: itemsPerPage }, (_, i) => {
+  const index = (currentIndex + i) % Reviews.length;
+  return Reviews[index];
+});
+
 
 
   return (
