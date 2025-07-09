@@ -19,15 +19,24 @@ const ClientReview = () => {
     });
   };
 
-  const visibleReviews = Reviews.slice(
-    currentIndex,
-    currentIndex + itemsPerPage
-  );
-  if (visibleReviews.length < itemsPerPage) {
-    visibleReviews.push(
-      ...Reviews.slice(0, itemsPerPage - visibleReviews.length)
-    );
-  }
+  // const visibleReviews = Reviews.slice(
+  //   currentIndex,
+  //   currentIndex + itemsPerPage
+  // );
+  // if (visibleReviews.length < itemsPerPage) {
+  //   visibleReviews.push(
+  //     ...Reviews.slice(0, itemsPerPage - visibleReviews.length)
+  //   );
+  // }
+
+let visibleReviews = Reviews.slice(currentIndex, currentIndex + itemsPerPage);
+if (visibleReviews.length < itemsPerPage) {
+  visibleReviews = [
+    ...visibleReviews,
+    ...Reviews.slice(0, itemsPerPage - visibleReviews.length),
+  ];
+}
+
 
   return (
     <div className="reviews-wrapper">

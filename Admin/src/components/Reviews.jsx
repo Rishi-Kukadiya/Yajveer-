@@ -38,11 +38,6 @@ export default function Reviews() {
         {Reviews && Reviews.length > 0 ? (
           Reviews.map((review, index) => (
             <div className="review-card-vertical" key={index}>
-              {/* <img
-                src={review.productPhoto}
-                alt={review.name}
-                className="user-photo-vertical"
-              /> */}
               <h3 className="user-name">{review.name}</h3>
               <div className="stars">
                 {[...Array(5)].map((_, i) => (

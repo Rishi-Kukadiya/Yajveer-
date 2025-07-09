@@ -16,9 +16,7 @@ export default function ReviewForm() {
   const navigate = useNavigate();
   const [name, setName] = useState("");
   const [review, setReview] = useState("");
-  const [rating, setRating] = useState(""); // Rating is still a string initially
-  // const [image, setImage] = useState(null);
-  // const [selectedFileName, setSelectedFileName] = useState("");
+  const [rating, setRating] = useState(""); 
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -44,16 +42,6 @@ export default function ReviewForm() {
     return true;
   };
 
-  // const handleImageChange = (e) => {
-  //   const file = e.target.files[0];
-  //   if (file) {
-  //     setImage(file);
-  //     setSelectedFileName(file.name);
-  //   } else {
-  //     setImage(null);
-  //     setSelectedFileName("");
-  //   }
-  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -65,8 +53,7 @@ export default function ReviewForm() {
     const formData = new FormData();
     formData.append("name", name);
     formData.append("review", review);
-    formData.append("rating", parseFloat(rating)); // Ensure rating is sent as a number
-    // formData.append("productPhoto", image);
+    formData.append("rating", parseFloat(rating)); 
 
     setIsLoading(true);
 
@@ -76,23 +63,20 @@ export default function ReviewForm() {
         formData,
         {
           headers: {
-            "Content-Type": "multipart/form-data", // Essential for sending FormData
+            "Content-Type": "multipart/form-data", 
           },
-          withCredentials: true, // If your backend requires cookies/sessions
+          withCredentials: true, 
         }
       );
 
       // Check for a success status if needed, though axios typically throws for non-2xx
       if (response.status === 201 || response.status === 200) {
          toast.success("Review submitted successfully!");
-        // Clear form fields on successful submission
         setName("");
         setReview("");
         setRating("");
-        // setImage(null);
         setSelectedFileName("");
       } else {
-        // Handle unexpected non-error responses
          toast.error("Failed to submit review. Unexpected response.");
       }
     } catch (err) {
@@ -116,8 +100,7 @@ export default function ReviewForm() {
           "No response from server. Please check your network connection."
         );
       } else {
-        // Something happened in setting up the request that triggered an Error
-         toast.error("An unknown error occurred. Please try again.");
+        console.log("Hii");
       }
     } finally {
       setIsLoading(false); // Always stop loading animation
@@ -127,8 +110,6 @@ export default function ReviewForm() {
   return (
     <>
       {isLoading && <LoadingAnimation />}{" "}
-      {/* Render LoadingAnimation when isLoading is true */}
-      {/* Only render content when not loading to avoid flickering */}
       {!isLoading && (
         <>
           {isSidebarOpen && <Sidebar1 onClose={handleCloseSidebar} />}
@@ -153,54 +134,6 @@ export default function ReviewForm() {
                       onChange={(e) => setName(e.target.value)}
                     />
                   </div>
-                  {/* <div className="image-upload-section">
-                    <label className="image-upload-label">
-                      Upload <span className="highlight-text">Your</span> Photo
-                    </label>
-                    <p className="upload-instruction">
-                      Click below to select an image (JPEG, PNG, WEBP)
-                    </p>
-
-                    <div className="image-upload-container">
-                      <input
-                        type="file"
-                        id="imageInput"
-                        accept="image/png, image/jpeg, image/webp"
-                        onChange={handleImageChange}
-                      />
-                      <label htmlFor="imageInput" className="browse-button">
-                        <svg viewBox="0 0 24 24" width="18" height="18">
-                          <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
-                        </svg>
-                        Browse Files
-                      </label>
-
-                      <div className="file-info">
-                        {selectedFileName && (
-                          <span className="file-name">{selectedFileName}</span>
-                        )}
-                      </div>
-                    </div>
-
-                    {image && (
-                      <div className="preview-box">
-                        <img
-                          src={URL.createObjectURL(image)}
-                          alt="Preview"
-                          className="preview-image"
-                        />
-                        <span
-                          className="remove-image"
-                          onClick={() => {
-                            setImage(null);
-                            setSelectedFileName("");
-                          }}
-                        >
-                          Remove Image
-                        </span>
-                      </div>
-                    )}
-                  </div> */}
                   <div className="form-group">
                     <textarea
                       placeholder="Write your review..."
