@@ -2,14 +2,24 @@ import { useState } from "react";
 import "../../CSS/Home/ClientReview.css";
 import { useSelector } from "react-redux";
 import userlogo from "../../assets/User.jpg";
+import stringSimilarity from "string-similarity"; 
 
-const ClientReview = () => {
+const ProductReview = ({ productName }) => {
   const { data: Reviews = [] } = useSelector((state) => state.reviews);
   const [currentIndex, setCurrentIndex] = useState(0);
   const itemsPerPage = 4;
 
-  // ✅ Prevent division by 0
-  const totalReviews = Reviews.length;
+  
+  const filteredReviews = Reviews.filter((review) => {
+    const reviewProduct = review.productName || "";
+    const similarityScore = stringSimilarity.compareTwoStrings(
+      reviewProduct.toLowerCase(),
+      productName.toLowerCase()
+    );
+    return similarityScore >= 0.7; 
+  });
+
+  const totalReviews = filteredReviews.length;
 
   const nextReviews = () => {
     if (totalReviews > 0) {
@@ -26,13 +36,13 @@ const ClientReview = () => {
     }
   };
 
-  // ✅ Pure, non-mutating logic to create visibleReviews array
-  const visibleReviews = totalReviews === 0
-    ? []
-    : Array.from({ length: Math.min(itemsPerPage, totalReviews) }, (_, i) => {
-        const index = (currentIndex + i) % totalReviews;
-        return Reviews[index];
-      });
+  const visibleReviews =
+    totalReviews === 0
+      ? []
+      : Array.from({ length: Math.min(itemsPerPage, totalReviews) }, (_, i) => {
+          const index = (currentIndex + i) % totalReviews;
+          return filteredReviews[index];
+        });
 
   return (
     <div className="reviews-wrapper">
@@ -53,7 +63,6 @@ const ClientReview = () => {
               <div className="review-card" key={review._id || idx}>
                 <img src={userlogo} alt="User" className="user-image" />
                 <p className="review-text">"{review.review}"</p>
-                <p className="review-text">"{review.productname}"</p>
                 <h4 className="user-name">{review.name}</h4>
                 <div className="user-rating">
                   {"★".repeat(review.rating)}
@@ -74,4 +83,4 @@ const ClientReview = () => {
   );
 };
 
-export default ClientReview;
+export default ProductReview;

@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Fectchdata, addToCart } from "../Redux/CartSlice.js";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router";
+import ProductReview from "./productReview.jsx";
 import Navbar from "./navbar";
 import Navbar2 from "./navbar2";
 import MainNav from "./mainnav";
@@ -33,8 +34,8 @@ export default function ProductDetails() {
       weights: ["75g", "100g", "250g"],
       prices: {
         "75g": `${product.actualPrice}`,
-        "100g": `${(1.9*product.actualPrice*0.97).toFixed(0)}`,
-        "250g": `${(2.6*product.actualPrice*0.988).toFixed(0)}`,
+        "100g": `${(1.9 * product.actualPrice * 0.97).toFixed(0)}`,
+        "250g": `${(2.6 * product.actualPrice * 0.988).toFixed(0)}`,
       },
     },
     pouch: {
@@ -151,8 +152,10 @@ export default function ProductDetails() {
   const handleBuyNow = () => {
     const { items, totalQuantity } = getSelectedItems();
     if (items.length === 0) {
-      toast.error("Please select at least one quantity for a weight variant to add to cart.");
-      return ;
+      toast.error(
+        "Please select at least one quantity for a weight variant to add to cart."
+      );
+      return;
     }
     handleAddToCart();
     navigate("/cart", { replace: true });
@@ -348,8 +351,8 @@ export default function ProductDetails() {
           </div>
         </div>
       </div>
+      <ProductReview productname={product.productName}></ProductReview>
       <Footer />
-          
     </>
   );
 }
