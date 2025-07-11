@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Fectchdata, addToCart } from "../Redux/CartSlice.js";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router";
-import ProductReview from "./productReview.jsx";
+import ProductReview from "./Preview.jsx";
 import Navbar from "./navbar";
 import Navbar2 from "./navbar2";
 import MainNav from "./mainnav";
