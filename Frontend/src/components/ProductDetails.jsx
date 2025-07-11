@@ -365,7 +365,7 @@ export default function ProductDetails() {
           </div>
         </div>
       </div>
-      <ProductReview productname={product.productName}></ProductReview>
+      <ProductReview productName={product.productName}></ProductReview>
       <Footer />
     </>
   );
