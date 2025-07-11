@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "../../CSS/Home/ClientReview.css";
+import "../CSS/Home/ClientReview.css";
 import { useSelector } from "react-redux";
 import userlogo from "../../assets/User.jpg";
 import stringSimilarity from "string-similarity"; 
