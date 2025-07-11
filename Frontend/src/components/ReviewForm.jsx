@@ -17,6 +17,7 @@ export default function ReviewForm() {
   const [name, setName] = useState("");
   const [review, setReview] = useState("");
   const [rating, setRating] = useState(""); 
+  const [productname , setProductName] = useState("");
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -28,6 +29,8 @@ export default function ReviewForm() {
     const numericRating = parseFloat(rating);
     if (!name.trim()) {
       newErrors.name = "Name is required";
+    }else if(!productname.trim()){
+      newErrors.productname = "Product Name is required";
     }else if (!review.trim()) {
       newErrors.review = "Review is required";
     }else if (isNaN(numericRating) || numericRating < 0 || numericRating > 5) {
@@ -52,6 +55,7 @@ export default function ReviewForm() {
 
     const formData = new FormData();
     formData.append("name", name);
+    formData.append("productname", review);
     formData.append("review", review);
     formData.append("rating", parseFloat(rating)); 
 
@@ -73,6 +77,7 @@ export default function ReviewForm() {
       if (response.status === 201 || response.status === 200) {
          toast.success("Review submitted successfully!");
         setName("");
+        setProductName("");
         setReview("");
         setRating("");
         setSelectedFileName("");
@@ -132,6 +137,14 @@ export default function ReviewForm() {
                       placeholder="Your Name"
                       value={name}
                       onChange={(e) => setName(e.target.value)}
+                    />
+                  </div>
+                  <div className="form-group">
+                    <input
+                      type="text"
+                      placeholder="Enter the product name : "
+                      value={productname}
+                      onChange={(e) => setProductName(e.target.value)}
                     />
                   </div>
                   <div className="form-group">
