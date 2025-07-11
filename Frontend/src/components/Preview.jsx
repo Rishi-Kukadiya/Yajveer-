@@ -9,15 +9,6 @@ const ProductReview = ({ productName }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const itemsPerPage = 4;
 
-  //   const filteredReviews = Reviews.filter((review) => {
-  //     const reviewProduct = review.productName || "";
-  //     const similarityScore = stringSimilarity.compareTwoStrings(
-  //       reviewProduct.toLowerCase(),
-  //       productName.toLowerCase()
-  //     );
-  //     return similarityScore >= 0.7;
-  //   });
-
   const filteredReviews = Reviews.filter((review) => {
     const reviewProduct = (review.productName || "").toLowerCase();
     const product = (productName || "").toLowerCase();
@@ -62,10 +53,8 @@ const ProductReview = ({ productName }) => {
 
   return (
     <div className="reviews-wrapper">
-      <h2 className="reviews-heading">What Our Customers Say</h2>
-
       {totalReviews === 0 ? (
-        <p className="no-reviews-msg">No reviews available yet.</p>
+        <p className="no-reviews-msg"></p>
       ) : (
         <div className="reviews-slider">
           {totalReviews > itemsPerPage && (

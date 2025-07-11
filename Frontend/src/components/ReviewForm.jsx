@@ -55,7 +55,7 @@ export default function ReviewForm() {
 
     const formData = new FormData();
     formData.append("name", name);
-    formData.append("productname", review);
+    formData.append("productname", productname);
     formData.append("review", review);
     formData.append("rating", parseFloat(rating)); 
 
@@ -142,7 +142,7 @@ export default function ReviewForm() {
                   <div className="form-group">
                     <input
                       type="text"
-                      placeholder="Enter the product name : "
+                      placeholder="Enter the product name "
                       value={productname}
                       onChange={(e) => setProductName(e.target.value)}
                     />
