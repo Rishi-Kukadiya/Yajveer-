@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "../CSS/Home/ClientReview.css";
 import { useSelector } from "react-redux";
-import userlogo from "../../assets/User.jpg";
+import userlogo from "../assets/User.jpg";
 import stringSimilarity from "string-similarity"; 
 
 const ProductReview = ({ productName }) => {
