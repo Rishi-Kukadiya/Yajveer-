@@ -2,21 +2,35 @@ import { useState } from "react";
 import "../CSS/Home/ClientReview.css";
 import { useSelector } from "react-redux";
 import userlogo from "../assets/User.jpg";
-import stringSimilarity from "string-similarity"; 
+import stringSimilarity from "string-similarity";
 
 const ProductReview = ({ productName }) => {
   const { data: Reviews = [] } = useSelector((state) => state.reviews);
   const [currentIndex, setCurrentIndex] = useState(0);
   const itemsPerPage = 4;
 
-  
+  //   const filteredReviews = Reviews.filter((review) => {
+  //     const reviewProduct = review.productName || "";
+  //     const similarityScore = stringSimilarity.compareTwoStrings(
+  //       reviewProduct.toLowerCase(),
+  //       productName.toLowerCase()
+  //     );
+  //     return similarityScore >= 0.7;
+  //   });
+
   const filteredReviews = Reviews.filter((review) => {
-    const reviewProduct = review.productName || "";
+    const reviewProduct = (review.productName || "").toLowerCase();
+    const product = (productName || "").toLowerCase();
+
+    // avoid comparing if productName is missing
+    if (!product) return false;
+
     const similarityScore = stringSimilarity.compareTwoStrings(
-      reviewProduct.toLowerCase(),
-      productName.toLowerCase()
+      reviewProduct,
+      product
     );
-    return similarityScore >= 0.7; 
+
+    return similarityScore >= 0.7;
   });
 
   const totalReviews = filteredReviews.length;
@@ -31,7 +45,9 @@ const ProductReview = ({ productName }) => {
     if (totalReviews > 0) {
       setCurrentIndex((prev) => {
         const newIndex = prev - itemsPerPage;
-        return newIndex < 0 ? (totalReviews + newIndex) % totalReviews : newIndex;
+        return newIndex < 0
+          ? (totalReviews + newIndex) % totalReviews
+          : newIndex;
       });
     }
   };
