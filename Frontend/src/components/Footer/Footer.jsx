@@ -14,10 +14,10 @@ export default function Footer() {
             supporting your health and well-being.
           </p>
           <div className="social-icons">
-            <Link to="https://www.facebook.com/share/1At1kGfEAX/">
+            <Link to="https://www.facebook.com/yajveerayurvedic">
               <i className="bi bi-facebook"></i>
             </Link>
-            <Link to="https://www.instagram.com/yajveerayurved?igsh=MTEzZHYxd3doMW44Ng%3D%3D">
+            <Link to="https://www.instagram.com/yajveerayurvedic/">
               <i className="bi bi-instagram"></i>
             </Link>
             <Link to="https://wa.me/917405430230">
