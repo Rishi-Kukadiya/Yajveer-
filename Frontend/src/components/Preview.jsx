@@ -209,9 +209,9 @@ const ProductReview = ({ productName }) => {
     <div className="reviews-wrapper">
       <div className="reviews-header">
         <h3>Customer Reviews</h3>
-        {totalReviews > 0 && (
+        {/* {totalReviews > 0 && (
           <span className="review-count">({totalReviews} reviews found)</span>
-        )}
+        )} */}
       </div>
       
       {totalReviews === 0 ? (
